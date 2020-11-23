@@ -1,0 +1,24 @@
+{
+  "name": "my-cool-dictionary",
+  "version": "1.0.0",
+  "description": "A fun application for storing new words and playing with them for more powerful memorization",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/KostadinValchev/my-cool-dictionary.git"
+  },
+  "author": "Kostadin Valchev",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/KostadinValchev/my-cool-dictionary/issues"
+  },
+  "homepage": "https://github.com/KostadinValchev/my-cool-dictionary#readme",
+  "dependencies": {
+    "body-parser": "^1.19.0",
+    "express": "^4.17.1",
+    "nodemon": "^2.0.6"
+  }
+}
