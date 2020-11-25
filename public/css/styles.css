@@ -1,0 +1,16 @@
+*,
+*::after,
+*::before {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  font-family: Georgia, "Times New Roman", Times, serif;
+  background: url("/img/background.jpg") no-repeat center center fixed;
+}
+
+.form-mt {
+    margin-top: 10vh;
+}

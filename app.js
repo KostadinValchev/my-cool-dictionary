@@ -1,7 +1,10 @@
 const express = require("express");
 const bodyParser = require("body-parser");
 const path = require("path");
+const cookieParser = require("cookie-parser");
 const exphbs = require("express-handlebars");
+const flash = require("connect-flash");
+const session = require("express-session");
 
 const routes = require("./routes/index");
 const users = require("./routes/users");
@@ -21,10 +24,20 @@ app.engine(
 );
 app.set("view engine", "handlebars");
 
+// Set Static Folder
+app.use(express.static(path.join(__dirname, "public")));
 
+// Express Session Middleware
+app.use(
+  session({
+    secret: "secret",
+    saveUninitialized: true,
+    resave: true,
+  })
+);
 
 app.use("/", routes);
-app.use("/users", users);
+app.use("/users", users)
 
 app.set("port", process.env.PORT || 3000);
 app.listen(app.get("port"), () => {
