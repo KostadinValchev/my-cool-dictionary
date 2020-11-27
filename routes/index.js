@@ -4,6 +4,7 @@ const router = express.Router();
 // Homepage
 
 router.get("/", (req, res) => {
+  console.log();
   res.render("index");
 });
 

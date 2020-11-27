@@ -8,19 +8,37 @@ router.get("/register", (req, res) => {
 });
 
 router.post("/register", (req, res) => {
-  const { email, password } = req.body;
-  firebase
-    .auth()
-    .createUserWithEmailAndPassword(email, password)
-    .then((user) => {
-      console.log("Account successfully created");
-      res.redirect("/");
-    })
-    .catch((error) => {
-      var errorCode = error.code;
-      var errorMessage = error.message;
-      console.log(errorMessage);
+  const { username, email, password, password2 } = req.body;
+
+  // Validation
+  req.checkBody("username", "Name is required").notEmpty();
+  req.checkBody("email", "Email is required").notEmpty();
+  req.checkBody("email", "Email is not valid").isEmail();
+  req.check("password", "Password is required").notEmpty();
+  req.check("password2", "Confirm Password is required").notEmpty();
+  req
+    .check("password2", "Password and confirm password does not match")
+    .equals(req.body.password);
+
+  let errors = req.validationErrors();
+  if (errors) {
+    res.render("register", {
+      errors: errors,
     });
+  } else {
+    firebase
+      .auth()
+      .createUserWithEmailAndPassword(email, password)
+      .then((user) => {
+        req.flash("success_msg", "You are registered and can now login");
+        res.redirect("/users/login");
+      })
+      .catch((error) => {
+        var errorCode = error.code;
+        var errorMessage = error.message;
+        req.flash("error_msg", errorMessage);
+      });
+  }
 });
 
 // Login User
@@ -34,13 +52,14 @@ router.post("/login", (req, res) => {
     .auth()
     .signInWithEmailAndPassword(email, password)
     .then((user) => {
-      console.log("Login successful");
+      req.flash("success_msg", "Login successful");
       res.redirect("/");
     })
     .catch((error) => {
       var errorCode = error.code;
       var errorMessage = error.message;
-      res.redirect("/login");
+      req.flash("error_msg", errorMessage);
+      res.redirect("login");
     });
 });
 
@@ -49,12 +68,12 @@ router.get("/logout", (req, res) => {
   firebase
     .auth()
     .signOut()
-    .then(function () {
-      console.log("Sign-out successful.");
+    .then(() => {
+      req.flash("success_msg", "You are logged out");
       res.redirect("/");
     })
-    .catch(function (error) {
-      // An error happened.
+    .catch((error) => {
+      throw error;
     });
 });
 
