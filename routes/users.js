@@ -53,7 +53,8 @@ router.post("/login", (req, res) => {
     .signInWithEmailAndPassword(email, password)
     .then((user) => {
       req.flash("success_msg", "Login successful");
-      res.redirect("/");
+      res.render("index", user);
+      // res.redirect("/");
     })
     .catch((error) => {
       var errorCode = error.code;

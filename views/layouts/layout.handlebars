@@ -22,6 +22,7 @@
         </button>
 
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            {{#if user}}
             <ul class="navbar-nav mr-auto">
                 <li class="nav-item active">
                     <a class="nav-link" href="/">Home <span class="sr-only">(current)</span></a>
@@ -40,8 +41,10 @@
                 </li>
             </ul>
             <a class="btn btn-outline-primary" href="/users/login">Login</a>
+            {{else}}
             <a class="btn btn-outline-primary ml-1" href="/users/register">Sign up</a>
             <a class="btn btn-outline-primary ml-1" href="/users/logout">Log out</a>
+            {{/if}}
         </div>
     </nav>
     <div class="container">
