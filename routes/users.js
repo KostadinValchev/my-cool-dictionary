@@ -1,43 +1,38 @@
 const express = require("express");
 const router = express.Router();
-const firebase = require("firebase");
+const validator = require("../utils/validator");
+const userModel = require("../models/user");
 
 // Register User
 router.get("/register", (req, res) => {
   res.render("register");
 });
 
-router.post("/register", (req, res) => {
+router.post("/register", async (req, res) => {
   const { username, email, password, password2 } = req.body;
 
   // Validation
-  req.checkBody("username", "Name is required").notEmpty();
-  req.checkBody("email", "Email is required").notEmpty();
-  req.checkBody("email", "Email is not valid").isEmail();
-  req.check("password", "Password is required").notEmpty();
-  req.check("password2", "Confirm Password is required").notEmpty();
-  req
-    .check("password2", "Password and confirm password does not match")
-    .equals(req.body.password);
+  let validationErrors = validator.registerForm(req);
 
-  let errors = req.validationErrors();
-  if (errors) {
+  if (validationErrors) {
     res.render("register", {
-      errors: errors,
+      errors: validationErrors,
     });
   } else {
-    firebase
-      .auth()
-      .createUserWithEmailAndPassword(email, password)
-      .then((user) => {
-        req.flash("success_msg", "You are registered and can now login");
-        res.redirect("/users/login");
-      })
-      .catch((error) => {
-        var errorCode = error.code;
-        var errorMessage = error.message;
-        req.flash("error_msg", errorMessage);
-      });
+    try {
+      const user = await userModel.createWithEmailAndPassword(
+        email,
+        password,
+        username
+      );
+      await userModel.createProfileDocument(user, { displayName: username });
+      req.flash("success_msg", "You are registered and can now login");
+      res.redirect("/users/login");
+    } catch (error) {
+      let errorCode = error.code;
+      let errorMessage = error.message;
+      req.flash("error_msg", errorMessage);
+    }
   }
 });
 
@@ -46,36 +41,30 @@ router.get("/login", (req, res) => {
   res.render("login");
 });
 
-router.post("/login", (req, res) => {
+router.post("/login", async (req, res) => {
   const { email, password } = req.body;
-  firebase
-    .auth()
-    .signInWithEmailAndPassword(email, password)
-    .then((user) => {
-      req.flash("success_msg", "Login successful");
-      res.render("index", user);
-      // res.redirect("/");
-    })
-    .catch((error) => {
-      var errorCode = error.code;
-      var errorMessage = error.message;
-      req.flash("error_msg", errorMessage);
-      res.redirect("login");
-    });
+
+  try {
+    let user = await userModel.signInWithEmailAndPassword(email, password);
+    req.flash("success_msg", "Login successful");
+    res.render("index", { user });
+  } catch (error) {
+    var errorCode = error.code;
+    var errorMessage = error.message;
+    req.flash("error_msg", errorMessage);
+    res.redirect("login");
+  }
 });
 
 // Logout User
-router.get("/logout", (req, res) => {
-  firebase
-    .auth()
-    .signOut()
-    .then(() => {
-      req.flash("success_msg", "You are logged out");
-      res.redirect("/");
-    })
-    .catch((error) => {
-      throw error;
-    });
+router.get("/logout", async (req, res) => {
+  try {
+    await userModel.logout();
+    req.flash("success_msg", "You are logged out");
+    res.redirect("/");
+  } catch (error) {
+    console.log(error);
+  }
 });
 
 module.exports = router;

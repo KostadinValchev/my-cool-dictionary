@@ -6,26 +6,7 @@ const exphbs = require("express-handlebars");
 const flash = require("connect-flash");
 const session = require("express-session");
 const expressValidator = require("express-validator");
-const firebase = require("firebase");
-const admin = require("firebase-admin");
-
-const serviceAccount = require("./serviceAccountKey.json");
-
-admin.initializeApp({
-  credential: admin.credential.cert(serviceAccount),
-  databaseURL: "https://my-cool-dictionary.firebaseio.com",
-});
-
-var firebaseConfig = {
-  apiKey: "",
-  authDomain: "",
-  databaseURL: "",
-  projectId: "",
-  storageBucket: "",
-  messagingSenderId: "",
-  appId: "",
-  measurementId: "",
-};
+const firebase = require("./firebase/firebase.utils");
 
 const routes = require("./routes/index");
 const users = require("./routes/users");
@@ -34,9 +15,7 @@ const users = require("./routes/users");
 const app = express();
 
 // Initialize Firebase
-firebase.initializeApp(firebaseConfig);
-// firebase.analytics();
-firebase.auth().setPersistence(firebase.auth.Auth.Persistence.NONE);
+firebase.init();
 
 // Setup body-parser Middleware
 app.use(bodyParser.json());
@@ -91,7 +70,7 @@ app.use((req, res, next) => {
   res.locals.success_msg = req.flash("success_msg");
   res.locals.error_msg = req.flash("error_msg");
   res.locals.error = req.flash("error");
-  res.locals.user = req.user || null;
+  // res.locals.user = req.user || null;
   next();
 });
 
