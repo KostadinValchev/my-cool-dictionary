@@ -8,8 +8,10 @@ const session = require("express-session");
 const expressValidator = require("express-validator");
 const firebase = require("./firebase/firebase.utils");
 
+// Routes
 const routes = require("./routes/index");
 const users = require("./routes/users");
+const words = require("./routes/words");
 
 // Init App
 const app = express();
@@ -76,6 +78,7 @@ app.use((req, res, next) => {
 
 app.use("/", routes);
 app.use("/users", users);
+app.use("/words", words);
 
 app.set("port", process.env.PORT || 3000);
 app.listen(app.get("port"), () => {
