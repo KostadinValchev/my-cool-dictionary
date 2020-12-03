@@ -18,3 +18,67 @@ body {
 .form-mt {
   margin-top: 10vh;
 }
+
+/* Competition Cards */
+.card {
+  width: 50%;
+}
+
+.card-body {
+  text-align: center;
+}
+
+#guess-word {
+  font-weight: bold;
+  font-size: 24px;
+  text-transform: uppercase;
+}
+
+.hidden {
+  display: none;
+  width: 100px;
+}
+
+/* Featured views */
+
+/* conters conteiners */
+#counters-container {
+  margin-top: 40px;
+  background-color: #e9ecef;
+  font-size: 2.5rem;
+  padding: 1.5rem;
+}
+
+#counters-container > h1 {
+  text-align: center;
+  text-transform: uppercase;
+}
+
+#en-success-span,
+#en-falure-span,
+#en-hints-span {
+  float: right;
+}
+
+#suggestions-container {
+  margin-top: 150px;
+}
+
+/* Help - Hints container and buttons */
+
+#help-buttons-container {
+  margin: 1rem;
+}
+
+#help-buttons-container > button {
+  margin-right: 5px;
+}
+
+.words-table-container {
+  display: flex;
+  flex-direction: column;
+}
+
+.pagination {
+  justify-content: center;
+}

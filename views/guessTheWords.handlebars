@@ -1,0 +1,55 @@
+<!-- Counters container -->
+
+<div class="container" id="counters-container">
+    <h1>Current status</h1>
+    <div class="row">
+        <div class="col">
+            <span class="badge badge-pill badge-success">Success</span> <span id="en-success-span">5</span>
+        </div>
+        <div class="col">
+            <span class="badge badge-pill badge-danger">Falure</span> <span id="en-falure-span">2</span>
+        </div>
+        <div class="col">
+            <span class="badge badge-pill badge-warning">Hints</span> <span id="en-hints-span">1</span>
+        </div>
+    </div>
+</div>
+
+<!-- Suggestions container -->
+<div class="container" id="suggestions-container">
+    <div class="row justify-content-md-center">
+        <div class="card">
+
+            <div class="card-body" id="guess-word">
+                Word...
+            </div>
+
+            <!-- Alerts -->
+
+            <div class="alert alert-success hidden" role="alert" id="success">
+                Success
+            </div>
+
+            <div class="alert alert-danger hidden" role="alert" id="failure">
+                Ops wrong answer
+            </div>
+
+            <!-- Alerts ends -->
+
+            <div class="col-md-auto">
+                <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                        <button class="btn btn-outline-secondary" type="button" id="en-check-button">Check</button>
+                    </div>
+                    <input type="text" class="form-control" placeholder="" id="bg-input"
+                        aria-label="Example text with button addon" aria-describedby="button-addon1">
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <div class="row justify-content-md-center" id="help-buttons-container">
+        <button type="button" class="btn btn-warning" id="en-hint-button">Hint</button>
+        <button type="button" class="btn btn-info" id="en-next-button">Next</button>
+    </div>
+</div>
