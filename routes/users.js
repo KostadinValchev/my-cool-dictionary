@@ -47,6 +47,7 @@ router.post("/login", async (req, res) => {
   try {
     let user = await userModel.signInWithEmailAndPassword(email, password);
     req.flash("success_msg", "Login successful");
+    // res.redirect("/");
     res.render("index", { user });
   } catch (error) {
     var errorCode = error.code;

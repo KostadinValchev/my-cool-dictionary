@@ -50,6 +50,7 @@ const signInWithEmailAndPassword = async (email, password) => {
     let { user } = await firebase
       .auth()
       .signInWithEmailAndPassword(email, password);
+    // retrieveIdToken();
     return user;
   } catch (error) {
     console.log(error);
@@ -64,9 +65,16 @@ const logout = async () => {
   }
 };
 
+const onAuthStateChanged = (req, res, next) => {
+  firebase.auth().onAuthStateChanged((user) => {
+    if (user) next();
+  });
+};
+
 module.exports = {
   createWithEmailAndPassword,
   createProfileDocument,
   signInWithEmailAndPassword,
   logout,
+  onAuthStateChanged,
 };
