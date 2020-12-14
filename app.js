@@ -40,8 +40,8 @@ app.use(express.static(path.join(__dirname, "public")));
 app.use(
   session({
     secret: "secret",
-    saveUninitialized: true,
-    resave: true,
+    saveUninitialized: false,
+    resave: false,
   })
 );
 

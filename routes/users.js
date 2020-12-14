@@ -2,10 +2,16 @@ const express = require("express");
 const router = express.Router();
 const validator = require("../utils/validator");
 const userModel = require("../models/user");
+const csrf = require("csurf");
+
+const csrfProtection = csrf();
+
+// Set CSRF protection
+router.use(csrfProtection);
 
 // Register User
 router.get("/register", (req, res) => {
-  res.render("register");
+  res.render("register", { csrfToken: req.csrfToken() });
 });
 
 router.post("/register", async (req, res) => {
@@ -38,7 +44,7 @@ router.post("/register", async (req, res) => {
 
 // Login User
 router.get("/login", (req, res) => {
-  res.render("login");
+  res.render("login", { csrfToken: req.csrfToken() });
 });
 
 router.post("/login", async (req, res) => {
