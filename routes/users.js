@@ -2,6 +2,7 @@ const express = require("express");
 const router = express.Router();
 const validator = require("../utils/validator");
 const userModel = require("../models/user");
+const redirectHome = require("../models/user").redirectHome;
 const csrf = require("csurf");
 
 const csrfProtection = csrf();
@@ -10,11 +11,11 @@ const csrfProtection = csrf();
 router.use(csrfProtection);
 
 // Register User
-router.get("/register", (req, res) => {
+router.get("/register", redirectHome, (req, res) => {
   res.render("register", { csrfToken: req.csrfToken() });
 });
 
-router.post("/register", async (req, res) => {
+router.post("/register", redirectHome, async (req, res) => {
   const { username, email, password, password2 } = req.body;
 
   // Validation
@@ -43,15 +44,20 @@ router.post("/register", async (req, res) => {
 });
 
 // Login User
-router.get("/login", (req, res) => {
+router.get("/login", redirectHome, (req, res) => {
   res.render("login", { csrfToken: req.csrfToken() });
 });
 
-router.post("/login", async (req, res) => {
+router.post("/login", redirectHome, async (req, res) => {
   const { email, password } = req.body;
 
   try {
     let user = await userModel.signInWithEmailAndPassword(email, password);
+    req.session.user = {
+      uid: user.uid,
+      displayName: user.displayName,
+      email: user.email,
+    };
     req.flash("success_msg", "Login successful");
     // res.redirect("/");
     res.render("index", { user });
@@ -64,11 +70,19 @@ router.post("/login", async (req, res) => {
 });
 
 // Logout User
+// TODO: Set middleware to redirect no auth users to login page
 router.get("/logout", async (req, res) => {
   try {
     await userModel.logout();
-    req.flash("success_msg", "You are logged out");
-    res.redirect("/");
+    req.session.destroy((err) => {
+      if (err) {
+        return res.redirect("/");
+      }
+
+      res.clearCookie("session-id");
+      res.redirect("/users/login");
+      req.flash("success_msg", "You are logged out");
+    });
   } catch (error) {
     console.log(error);
   }

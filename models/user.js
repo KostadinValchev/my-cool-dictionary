@@ -71,10 +71,20 @@ const onAuthStateChanged = (req, res, next) => {
   });
 };
 
+// Checking user state in session and redirect
+// const redirectLogin = (req, res, next) => {
+//   !req.session.user ? res.redirect("/login") : next();
+// };
+
+const redirectHome = (req, res, next) => {
+  req.session.user ? res.redirect("/") : next();
+};
+
 module.exports = {
   createWithEmailAndPassword,
   createProfileDocument,
   signInWithEmailAndPassword,
   logout,
   onAuthStateChanged,
+  redirectHome,
 };

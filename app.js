@@ -14,6 +14,19 @@ const routes = require("./routes/index");
 const users = require("./routes/users");
 const words = require("./routes/words");
 
+// Environment Variables
+const TWO_HOURS = 1000 * 60 * 60 * 2;
+
+const {
+  PORT = 3000,
+  NODE_ENV = "development",
+  SESS_NAME = "session-id",
+  SESS_SECRET = "#super-secret!",
+  SESS_LIFETIME = TWO_HOURS,
+} = process.env;
+
+const IN_PROD = NODE_ENV === "production";
+
 // Init App
 const app = express();
 
@@ -39,9 +52,15 @@ app.use(express.static(path.join(__dirname, "public")));
 // Express Session Middleware
 app.use(
   session({
-    secret: "secret",
+    secret: SESS_SECRET,
     saveUninitialized: false,
     resave: false,
+    name: SESS_NAME,
+    cookie: {
+      maxAge: SESS_LIFETIME,
+      sameSite: true,
+      secure: IN_PROD,
+    },
   })
 );
 
@@ -73,14 +92,13 @@ app.use((req, res, next) => {
   res.locals.success_msg = req.flash("success_msg");
   res.locals.error_msg = req.flash("error_msg");
   res.locals.error = req.flash("error");
-  res.locals.user = req.user || null;
+  res.locals.user = req.session.user || null;
   next();
 });
 app.use("/", routes);
 app.use("/users", users);
 app.use("/words", onAuthStateChanged, words);
 
-app.set("port", process.env.PORT || 3000);
-app.listen(app.get("port"), () => {
-  console.log(`Server started on port ${app.get("port")}`);
+app.listen(PORT, () => {
+  console.log(`Server started on port ${PORT}`);
 });
