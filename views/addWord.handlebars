@@ -5,22 +5,22 @@
         <div class="alert alert-danger">{{msg}}</div>
         {{/each}}
         {{/if}}
-        <form method="post" action="/users/login" class="form-signin mb-4">
+        <form method="post" action="/words/add" class="form-signin mb-4">
             <div class="text-center mb-4">
                 <img class="mb-4" src="/img/logo.png" alt="" width="100" height="100">
                 <h1 class="h3 mb-3 font-weight-normal">Add a word</h1>
             </div>
 
             <div class="form-label-group mb-4">
-                <label for="inputEmail">Context word</label>
-                <input type="text" name="word" class="form-control" required autofocus>
+                <label for="context-word">Context word</label>
+                <input type="text" name="contextWord" class="form-control" required autofocus>
             </div>
-            <span class="badge badge-pill badge-success">+ add answer</span>
+            <span class="badge badge-pill badge-success" id="add-answer" onclick="addAnswer()">+ add answer</span>
             <div class="form-label-group mb-4">
-                <label for="inputPassword">Native answer</label>
-                <input type="password" name="native" class="form-control" placeholder="Password" required>
+                <label for="native-1">Native answer 1</label>
+                <input type="text" name="native1" class="form-control" required>
             </div>
-            <button class="btn btn-lg btn-primary btn-block" type="submit">Save</button>
+            <button class="btn btn-lg btn-primary btn-block" id="btn-word-submit" type="submit">Save</button>
         </form>
     </div>
 </div>

@@ -18,7 +18,22 @@ const loginForm = (req) => {
   return req.validationErrors();
 };
 
+const addWord = (req) => {
+  const { contextWord, ...other } = req.body;
+  let answers = Object.keys(other);
+  req.checkBody("contextWord", "Context Word is required").notEmpty();
+  req.checkBody("native1", "Native answer 1 is required").notEmpty();
+  answers.shift();
+  while (answers.length) {
+    let currentAnswer = answers.shift();
+    req.checkBody(currentAnswer, `${currentAnswer} is required`).notEmpty();
+  }
+
+  return req.validationErrors();
+};
+
 module.exports = {
   registerForm,
   loginForm,
+  addWord,
 };
