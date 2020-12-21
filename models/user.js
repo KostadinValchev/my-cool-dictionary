@@ -1,12 +1,5 @@
-const admin = require("firebase-admin");
-const serviceAccount = require("../serviceAccountKey.json");
+const firestore = require("../firebase/firebase.utils").firestore;
 const firebase = require("firebase");
-
-admin.initializeApp({
-  credential: admin.credential.cert(serviceAccount),
-  databaseURL: "https://my-cool-dictionary.firebaseio.com",
-});
-const firestore = admin.firestore();
 
 const createWithEmailAndPassword = async (email, password) => {
   try {

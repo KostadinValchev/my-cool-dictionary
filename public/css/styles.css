@@ -82,3 +82,12 @@ body {
 .pagination {
   justify-content: center;
 }
+
+/* Adding words */
+
+/* Btn for add more answers */
+
+#add-answer {
+  cursor: pointer;
+  padding: 0.4rem;
+}
