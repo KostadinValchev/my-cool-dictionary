@@ -1,23 +1,29 @@
 const express = require("express");
 const router = express.Router();
-const onAuthStateChanged = require("../models/user").onAuthStateChanged;
 const validator = require("../utils/validator");
-const word = require("../models/word");
+const { addWordDocument } = require("../models/word");
 
 router.get("/add", (req, res) => {
   res.render("addWord");
 });
 
-router.post("/add", (req, res) => {
+router.post("/add", async (req, res) => {
   const { contextWord, ...answers } = req.body;
   let validationErrors = validator.addWord(req);
 
   if (validationErrors) {
     res.render("addWord", { errors: validationErrors });
   } else {
-    // TODO: Store word in Firestore
     try {
-    } catch (error) {}
+      await addWordDocument(req.session.user.uid, {
+        contextWord,
+        answers,
+      });
+      req.flash("success_msg", "Successfully added word");
+      res.redirect("/words/add");
+    } catch (error) {
+      console.log(error);
+    }
   }
 });
 
