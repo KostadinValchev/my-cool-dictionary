@@ -18,7 +18,7 @@ router.use(csrfProtection);
 
 // Register User
 router.get("/register", redirectHome, (req, res) => {
-  res.render("register", { csrfToken: req.csrfToken() });
+  res.render("users/register", { csrfToken: req.csrfToken() });
 });
 
 router.post("/register", redirectHome, async (req, res) => {
@@ -28,7 +28,7 @@ router.post("/register", redirectHome, async (req, res) => {
   let validationErrors = validator.registerForm(req);
 
   if (validationErrors) {
-    res.render("register", {
+    res.render("users/register", {
       errors: validationErrors,
     });
   } else {
@@ -47,7 +47,7 @@ router.post("/register", redirectHome, async (req, res) => {
 
 // Login User
 router.get("/login", redirectHome, (req, res) => {
-  res.render("login", { csrfToken: req.csrfToken() });
+  res.render("users/login", { csrfToken: req.csrfToken() });
 });
 
 router.post("/login", redirectHome, async (req, res) => {
@@ -56,7 +56,7 @@ router.post("/login", redirectHome, async (req, res) => {
   const validationErrors = validator.loginForm(req);
 
   if (validationErrors) {
-    res.render("login", { errors: validationErrors });
+    res.render("users/login", { errors: validationErrors });
   } else {
     try {
       let user = await signInWithEmailAndPassword(email, password);
@@ -66,8 +66,6 @@ router.post("/login", redirectHome, async (req, res) => {
         email: user.email,
       };
       req.flash("success_msg", "Login successful");
-      // res.redirect("/");
-      // res.render("index", { user });
       res.redirect("/");
     } catch (error) {
       var errorCode = error.code;

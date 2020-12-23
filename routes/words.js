@@ -4,7 +4,7 @@ const validator = require("../utils/validator");
 const { addWordDocument } = require("../models/word");
 
 router.get("/add", (req, res) => {
-  res.render("addWord");
+  res.render("words/addWord");
 });
 
 router.post("/add", async (req, res) => {
@@ -12,7 +12,7 @@ router.post("/add", async (req, res) => {
   let validationErrors = validator.addWord(req);
 
   if (validationErrors) {
-    res.render("addWord", { errors: validationErrors });
+    res.render("words/addWord", { errors: validationErrors });
   } else {
     try {
       await addWordDocument(req.session.user.uid, {
@@ -28,7 +28,7 @@ router.post("/add", async (req, res) => {
 });
 
 router.get("/guess-words", (req, res) => {
-  res.render("guessTheWords");
+  res.render("words/guessTheWords");
 });
 
 module.exports = router;
