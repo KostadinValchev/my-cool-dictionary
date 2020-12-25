@@ -1,7 +1,8 @@
 const express = require("express");
 const router = express.Router();
 const validator = require("../utils/validator");
-const { addWordDocument } = require("../models/word");
+const { addWordDocument, getAllWordsFromDatabase } = require("../models/word");
+const { json } = require("body-parser");
 
 router.get("/add", (req, res) => {
   res.render("words/addWord");
@@ -27,8 +28,13 @@ router.post("/add", async (req, res) => {
   }
 });
 
-router.get("/guess-words", (req, res) => {
-  res.render("words/guessTheWords");
+router.get("/guess-words", async (req, res) => {
+  try {
+    let words = await getAllWordsFromDatabase(req.session.user.uid);
+    res.render("words/guessTheWords", words);
+  } catch (error) {
+    console.log(error);
+  }
 });
 
 module.exports = router;

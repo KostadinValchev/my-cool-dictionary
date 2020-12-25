@@ -6,4 +6,18 @@ const addWordDocument = async (userId, additionalData) => {
   firestore.collection(userId).doc().set(additionalData);
 };
 
-module.exports = { addWordDocument };
+const getAllWordsFromDatabase = async (userId) => {
+  try {
+    let wordsRef = firestore.collection(userId);
+    let allWords = await wordsRef.get();
+    let result = [];
+    for (const doc of allWords.docs) {
+      result.push(doc.data());
+    }
+    return result;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+module.exports = { addWordDocument, getAllWordsFromDatabase };
