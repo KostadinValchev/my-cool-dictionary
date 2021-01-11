@@ -14,7 +14,7 @@ const getAllWordsFromDatabase = async (userId) => {
     for (const doc of allWords.docs) {
       result.push(doc.data());
     }
-    return result;
+    return JSON.stringify(result);
   } catch (error) {
     console.log(error);
   }

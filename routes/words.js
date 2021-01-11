@@ -31,7 +31,7 @@ router.post("/add", async (req, res) => {
 router.get("/guess-words", async (req, res) => {
   try {
     let words = await getAllWordsFromDatabase(req.session.user.uid);
-    res.render("words/guessTheWords", words);
+    res.render("words/guessTheWords", { words });
   } catch (error) {
     console.log(error);
   }
