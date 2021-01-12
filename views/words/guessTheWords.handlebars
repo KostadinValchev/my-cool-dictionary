@@ -4,13 +4,13 @@
     <h1>Current status</h1>
     <div class="row">
         <div class="col">
-            <span class="badge badge-pill badge-success">Success</span> <span id="en-success-span">5</span>
+            <span class="badge badge-pill badge-success">Success</span> <span id="success-span">5</span>
         </div>
         <div class="col">
-            <span class="badge badge-pill badge-danger">Falure</span> <span id="en-falure-span">2</span>
+            <span class="badge badge-pill badge-danger">Falure</span> <span id="falure-span">2</span>
         </div>
         <div class="col">
-            <span class="badge badge-pill badge-warning">Hints</span> <span id="en-hints-span">1</span>
+            <span class="badge badge-pill badge-warning">Hints</span> <span id="hints-span">1</span>
         </div>
     </div>
 </div>
@@ -39,9 +39,9 @@
             <div class="col-md-auto">
                 <div class="input-group mb-3">
                     <div class="input-group-prepend">
-                        <button class="btn btn-outline-secondary" type="button" id="en-check-button">Check</button>
+                        <button class="btn btn-outline-secondary" type="button" id="check-button">Check</button>
                     </div>
-                    <input type="text" class="form-control" placeholder="" id="bg-input"
+                    <input type="text" class="form-control" placeholder="" id="answer-input"
                         aria-label="Example text with button addon" aria-describedby="button-addon1">
                 </div>
             </div>
@@ -49,11 +49,12 @@
         </div>
     </div>
     <div class="row justify-content-md-center" id="help-buttons-container">
-        <button type="button" class="btn btn-warning" id="en-hint-button">Hint</button>
-        <button type="button" class="btn btn-info" id="en-next-button">Next</button>
+        <button type="button" class="btn btn-warning" id="hint-button">Hint</button>
+        <button type="button" class="btn btn-info" id="next-button">Next</button>
     </div>
 </div>
 
 <div id="words-collection" style="display: none;">{{words}}</div>
 
 <script src="/js/retrieve-words.js"></script>
+<script src="/js/playground-engine.js"></script>
