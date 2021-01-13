@@ -12,8 +12,15 @@ let createSession = (name) => {
 let increaseSession = (name) => {
   sessionStorage[name] = Number(sessionStorage[name]) + 1;
 };
-// sessionStorage.setItem("key", "value");
-// Check For Session
+
+// Get Status for current competition
+let getResults = () => {
+  return {
+    success: sessionStorage["success"],
+    falure: sessionStorage["falure"],
+    hints: sessionStorage["hints"],
+  };
+};
 
 // <----- END ----->
 
@@ -123,6 +130,15 @@ let cleanInputSuggestion = () => {
   document.getElementById("answer-input").value = "";
 };
 
+const handleFinishCompetition = () => {
+  if (confirm("Are you sure you want to finish competition?")) {
+    let result = getResults();
+    console.log(result);
+    // Redirect to status page from competition...
+    // window.location.replace("http://localhost:3000/words/status-competition");
+  }
+};
+
 (function () {
   // Get random word from collection
   const randomElement =
@@ -137,8 +153,10 @@ let cleanInputSuggestion = () => {
   // Attach Check button
   document.getElementById("check-button").onclick = handleCheck;
   document.getElementById("answer-input").onkeyup = enterCheck;
-  // Attach Hint Event
+  // Attach Event Hint
   document.getElementById("hint-button").onclick = handleHint;
-  // Attach Next Event
+  // Attach Event for next word
   document.getElementById("next-button").onclick = handleNextWord;
+  // Attach Event for finishing current competition
+  document.getElementById("finish-button").onclick = handleFinishCompetition;
 })();
