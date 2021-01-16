@@ -2,8 +2,8 @@ const firestore = require("../firebase/firebase.utils").firestore;
 const { setCurrentDate } = require("../utils/dateConverter");
 
 const addWordDocument = async (userId, additionalData) => {
-  additionalData.timestamp = setCurrentDate();
-  firestore.collection(userId).doc().set(additionalData);
+  let word = additionsForWordDoc(additionalData);
+  firestore.collection(userId).doc().set(word);
 };
 
 const getAllWordsFromDatabase = async (userId) => {
@@ -18,6 +18,14 @@ const getAllWordsFromDatabase = async (userId) => {
   } catch (error) {
     console.log(error);
   }
+};
+
+const additionsForWordDoc = (document) => {
+  document.success = 0;
+  document.falure = 0;
+  document.hints = 0;
+  document.timestamp = setCurrentDate();
+  return document;
 };
 
 module.exports = { addWordDocument, getAllWordsFromDatabase };

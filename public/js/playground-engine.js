@@ -38,6 +38,7 @@ let initCounters = () => {
 // <----- EVENTS  ----->
 // Attach event for Checking word suggestion
 const handleCheck = () => {
+  
   const bgInput = document.getElementById("answer-input");
   let answers = Object.values(currentWord);
   if (answers.includes(bgInput.value)) {
