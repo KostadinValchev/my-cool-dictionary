@@ -16,9 +16,9 @@ let increaseSession = (name) => {
 // Get Status for current competition
 let getResults = () => {
   return {
-    success: sessionStorage["success"],
-    falure: sessionStorage["falure"],
-    hints: sessionStorage["hints"],
+    success: Number(sessionStorage["success"]),
+    falure: Number(sessionStorage["falure"]),
+    hints: Number(sessionStorage["hints"]),
   };
 };
 
@@ -38,13 +38,13 @@ let initCounters = () => {
 // <----- EVENTS  ----->
 // Attach event for Checking word suggestion
 const handleCheck = () => {
-  
   const bgInput = document.getElementById("answer-input");
-  let answers = Object.values(currentWord);
+  let answers = Object.values(currentWord.answers);
   if (answers.includes(bgInput.value)) {
     toggleSuccessAlert();
     increaseSession("success");
-    increaseCounter("success");
+    increaseWordCounter(currentWord.index, "success");
+    increaseUICounter("success");
     setTimeout(() => {
       toggleSuccessAlert();
       cleanInputSuggestion();
@@ -54,7 +54,8 @@ const handleCheck = () => {
     toggleFalureAlert();
     toggleFalureAlert();
     increaseSession("falure");
-    increaseCounter("falure");
+    increaseWordCounter(currentWord.index, "falure");
+    increaseUICounter("falure");
   }
 };
 
@@ -79,32 +80,38 @@ const makeHint = (word) => {
 
 const handleHint = () => {
   cleanInputSuggestion();
-  let hint = makeHint(currentWord);
+  let hint = makeHint(currentWord.answers);
   increaseSession("hints");
-  increaseCounter("hints");
+  increaseWordCounter(currentWord.index, "hints");
+  increaseUICounter("hints");
   document.getElementById("answer-input").setAttribute("placeholder", hint);
 };
 
 // <----- DOM  ----->
+
 // Set New Word
 let setNewWord = () => {
-  const randomElement =
-    document.words[Math.floor(Math.random() * document.words.length)];
+  let index = Math.floor(Math.random() * document.words.length);
+  const randomElement = document.words[index];
   document.getElementById("guess-word").innerHTML = randomElement.contextWord;
   document.getElementById("answer-input").removeAttribute("placeholder");
-  currentWord = randomElement.answers;
+  currentWord = { index: index, answers: randomElement.answers };
 };
 
 let handleNextWord = () => {
   cleanInputSuggestion();
   increaseSession("falure");
-  increaseCounter("falure");
+  increaseUICounter("falure");
   setNewWord();
 };
 
 // Increase counters
 
-let increaseCounter = (name) => {
+let increaseWordCounter = (index, counterName) => {
+  document.words[index][counterName]++;
+};
+
+let increaseUICounter = (name) => {
   let getId = idCounters[name];
   document.getElementById(getId).innerHTML = sessionStorage[name];
 };
@@ -135,6 +142,7 @@ const handleFinishCompetition = () => {
   if (confirm("Are you sure you want to finish competition?")) {
     let result = getResults();
     console.log(result);
+    console.log(document.words);
     // Redirect to status page from competition...
     // window.location.replace("http://localhost:3000/words/status-competition");
   }
@@ -142,14 +150,9 @@ const handleFinishCompetition = () => {
 
 (function () {
   // Get random word from collection
-  const randomElement =
-    document.words[Math.floor(Math.random() * document.words.length)];
+  setNewWord();
   // Settup counters
   initCounters();
-  // Set word to the front-end
-  document.getElementById("guess-word").innerHTML = randomElement.contextWord;
-
-  currentWord = randomElement.answers;
 
   // Attach Check button
   document.getElementById("check-button").onclick = handleCheck;
