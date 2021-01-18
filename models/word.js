@@ -28,4 +28,16 @@ const additionsForWordDoc = (document) => {
   return document;
 };
 
-module.exports = { addWordDocument, getAllWordsFromDatabase };
+const setNewScoreResultFromUser = async (userId, score) => {
+  try {
+    await firestore.collection("scores").doc().set({ userId, score });
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+module.exports = {
+  addWordDocument,
+  getAllWordsFromDatabase,
+  setNewScoreResultFromUser,
+};

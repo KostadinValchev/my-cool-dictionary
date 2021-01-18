@@ -101,6 +101,7 @@ let setNewWord = () => {
 let handleNextWord = () => {
   cleanInputSuggestion();
   increaseSession("falure");
+  increaseWordCounter(currentWord.index, "falure");
   increaseUICounter("falure");
   setNewWord();
 };
@@ -140,9 +141,13 @@ let cleanInputSuggestion = () => {
 
 const handleFinishCompetition = () => {
   if (confirm("Are you sure you want to finish competition?")) {
-    let result = getResults();
-    console.log(result);
-    console.log(document.words);
+    let score = getResults();
+    postData("http://localhost:3000/words/finish-competition", {
+      score,
+      data: document.words,
+    }).then((data) => {
+      console.log("Successuful", data); // JSON data parsed by `data.json()` call
+    });
     // Redirect to status page from competition...
     // window.location.replace("http://localhost:3000/words/status-competition");
   }

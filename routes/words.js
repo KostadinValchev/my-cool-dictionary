@@ -1,7 +1,11 @@
 const express = require("express");
 const router = express.Router();
 const validator = require("../utils/validator");
-const { addWordDocument, getAllWordsFromDatabase } = require("../models/word");
+const {
+  addWordDocument,
+  getAllWordsFromDatabase,
+  setNewScoreResultFromUser,
+} = require("../models/word");
 const { json } = require("body-parser");
 
 router.get("/add", (req, res) => {
@@ -34,6 +38,17 @@ router.get("/guess-words", async (req, res) => {
     res.render("words/guessTheWords", { words });
   } catch (error) {
     console.log(error);
+  }
+});
+
+router.post("/finish-competition", async (req, res) => {
+  let { score, data } = req.body;
+  let userId = req.session.user.uid;
+  // TODO: Validate data from body....
+  try {
+    await setNewScoreResultFromUser(userId, score);
+  } catch (error) {
+    console.log("Errror", error);
   }
 });
 
