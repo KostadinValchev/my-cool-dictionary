@@ -4,6 +4,7 @@ const validator = require("../utils/validator");
 const {
   addWordDocument,
   getAllWordsFromDatabase,
+  updateWordData,
   setNewScoreResultFromUser,
 } = require("../models/word");
 const { json } = require("body-parser");
@@ -46,7 +47,8 @@ router.post("/finish-competition", async (req, res) => {
   let userId = req.session.user.uid;
   // TODO: Validate data from body....
   try {
-    await setNewScoreResultFromUser(userId, score);
+    // await setNewScoreResultFromUser(userId, score);
+    await updateWordData(userId, data);
   } catch (error) {
     console.log("Errror", error);
   }

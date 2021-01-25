@@ -28,6 +28,24 @@ const additionsForWordDoc = (document) => {
   return document;
 };
 
+const updateWordData = async (userId, data) => {
+  let wordsRef = firestore.collection(userId);
+  data.map((word) => {
+    wordsRef
+      .where("contextWord", "==", word.contextWord)
+      .limit(1)
+      .get()
+      .then((query) => {
+        const thing = query.docs[0];
+        thing.ref.update({
+          success: word.success,
+          falure: word.falure,
+          hints: word.hints,
+        });
+      });
+  });
+};
+
 const setNewScoreResultFromUser = async (userId, score) => {
   try {
     await firestore.collection("scores").doc().set({ userId, score });
@@ -39,5 +57,6 @@ const setNewScoreResultFromUser = async (userId, score) => {
 module.exports = {
   addWordDocument,
   getAllWordsFromDatabase,
+  updateWordData,
   setNewScoreResultFromUser,
 };

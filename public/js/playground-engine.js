@@ -158,7 +158,7 @@ const handleFinishCompetition = () => {
   setNewWord();
   // Settup counters
   initCounters();
-
+console.log(document.words);
   // Attach Check button
   document.getElementById("check-button").onclick = handleCheck;
   document.getElementById("answer-input").onkeyup = enterCheck;

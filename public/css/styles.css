@@ -91,3 +91,20 @@ body {
   cursor: pointer;
   padding: 0.4rem;
 }
+
+@media screen and (max-width: 767px) {
+  #counters-container {
+    display: flex;
+    flex-direction: row-reverse;
+    font-size: 25px;
+  }
+
+  #help-buttons-container {
+    display: flex;
+    justify-content: center;
+  }
+
+  .card {
+    margin-left: 25%;
+  }
+}
