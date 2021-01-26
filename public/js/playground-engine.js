@@ -145,8 +145,8 @@ const handleFinishCompetition = () => {
     postData("http://localhost:3000/words/finish-competition", {
       score,
       data: document.words,
-    }).then((data) => {
-      console.log("Successuful", data); // JSON data parsed by `data.json()` call
+    }).then(() => {
+      window.location.replace("http://localhost:3000/");
     });
   }
 };

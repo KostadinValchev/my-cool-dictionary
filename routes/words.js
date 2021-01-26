@@ -47,8 +47,9 @@ router.post("/finish-competition", async (req, res) => {
   let userId = req.session.user.uid;
   // TODO: Validate data from body....
   try {
-    // await setNewScoreResultFromUser(userId, score);
+    await setNewScoreResultFromUser(userId, score);
     await updateWordData(userId, data);
+    res.redirect("/");
   } catch (error) {
     console.log("Errror", error);
   }
