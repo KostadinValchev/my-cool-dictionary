@@ -148,8 +148,6 @@ const handleFinishCompetition = () => {
     }).then((data) => {
       console.log("Successuful", data); // JSON data parsed by `data.json()` call
     });
-    // Redirect to status page from competition...
-    // window.location.replace("http://localhost:3000/words/status-competition");
   }
 };
 
@@ -158,7 +156,7 @@ const handleFinishCompetition = () => {
   setNewWord();
   // Settup counters
   initCounters();
-console.log(document.words);
+
   // Attach Check button
   document.getElementById("check-button").onclick = handleCheck;
   document.getElementById("answer-input").onkeyup = enterCheck;

@@ -16,6 +16,15 @@ const csrfProtection = csrf();
 // Set CSRF protection
 router.use(csrfProtection);
 
+router.use((err, req, res, next) => {
+  if (err.code !== "EBADCSRFTOKEN") return next(err);
+
+  // handle CSRF token errors
+  res.status(403);
+  req.flash("error_msg", "Something went wrong! Try again");
+  res.redirect(req.originalUrl);
+});
+
 // Register User
 router.get("/register", redirectHome, (req, res) => {
   res.render("users/register", { csrfToken: req.csrfToken() });
