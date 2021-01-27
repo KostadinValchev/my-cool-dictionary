@@ -38,6 +38,7 @@ body {
 .card {
   height: 180px;
   width: 50%;
+  font-family: "Times New Roman", Georgia, serif;
 }
 
 .card-body {
@@ -54,8 +55,6 @@ body {
   display: none;
   width: 100px;
 }
-
-/* Featured views */
 
 /* conters conteiners */
 #counters-container {
@@ -78,11 +77,20 @@ body {
   float: right;
 }
 
+.shaking {
+  animation: shake 0.5s;
+  animation-iteration-count: infinite;
+}
+
 #suggestions-container {
   margin-top: 110px;
 }
 
 /* Help - Hints container and buttons */
+
+.check-button {
+  cursor: pointer;
+}
 
 #help-buttons-container {
   margin: 1rem;
@@ -144,27 +152,73 @@ body {
 }
 
 @media screen and (max-width: 540px) {
+  .jumbotron > div > h1 {
+    font-size: 2.8rem;
+    line-height: 1;
+  }
+
+  .jumbotron > div > p {
+    font-size: 0.6rem;
+  }
+  div.jumbotron > div > p:nth-child(3) > a {
+    font-size: 0.8rem;
+  }
+  .jumbotron > a.btn {
+    font-size: 0.6rem;
+  }
   #counters-container {
-    font-size: 1.6rem;
+    font-size: 0.9rem;
   }
 
   #counters-container > h1 {
-    font-size: 1em;
+    font-size: 1.2em;
   }
 
-  #counters-container > div {
-    display: flex;
-    flex-direction: column;
-    align-self: center;
-  }
-  #counters-container > div > div {
-    text-align-last: justify;
-  }
-  #counters-container > div > div > span {
-    width: 10rem;
-    text-align-last: auto;
-  }
   #suggestions-container {
     margin-top: 40px;
+  }
+
+  #counters-container > div > div {
+    padding: 0;
+  }
+
+  #guess-word {
+    font-size: 18px;
+  }
+}
+
+@keyframes shake {
+  0% {
+    transform: translate(1px, 1px) rotate(0deg);
+  }
+  10% {
+    transform: translate(-1px, -2px) rotate(-1deg);
+  }
+  20% {
+    transform: translate(-3px, 0px) rotate(1deg);
+  }
+  30% {
+    transform: translate(3px, 2px) rotate(0deg);
+  }
+  40% {
+    transform: translate(1px, -1px) rotate(1deg);
+  }
+  50% {
+    transform: translate(-1px, 2px) rotate(-1deg);
+  }
+  60% {
+    transform: translate(-3px, 1px) rotate(0deg);
+  }
+  70% {
+    transform: translate(3px, 1px) rotate(-1deg);
+  }
+  80% {
+    transform: translate(-1px, -1px) rotate(1deg);
+  }
+  90% {
+    transform: translate(1px, 2px) rotate(0deg);
+  }
+  100% {
+    transform: translate(1px, -2px) rotate(-1deg);
   }
 }

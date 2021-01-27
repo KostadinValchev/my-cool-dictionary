@@ -4,6 +4,12 @@ let idCounters = {
   hints: "hints-span",
 };
 
+let idDivCounters = {
+  success: "success-span-container",
+  falure: "falure-span-container",
+  hints: "hint-span-container",
+};
+
 // Create Session
 let createSession = (name) => {
   sessionStorage.setItem(`${name}`, "0");
@@ -38,12 +44,13 @@ let initCounters = () => {
 // <----- EVENTS  ----->
 // Attach event for Checking word suggestion
 const handleCheck = () => {
-  const bgInput = document.getElementById("answer-input");
+  const input = document.getElementById("answer-input").value.toLowerCase();
   let answers = Object.values(currentWord.answers);
-  if (answers.includes(bgInput.value)) {
+  if (answers.includes(input)) {
     toggleSuccessAlert();
     increaseSession("success");
     increaseWordCounter(currentWord.index, "success");
+    shakingElement("success");
     increaseUICounter("success");
     setTimeout(() => {
       toggleSuccessAlert();
@@ -55,6 +62,7 @@ const handleCheck = () => {
     toggleFalureAlert();
     increaseSession("falure");
     increaseWordCounter(currentWord.index, "falure");
+    shakingElement("falure");
     increaseUICounter("falure");
   }
 };
@@ -83,6 +91,7 @@ const handleHint = () => {
   let hint = makeHint(currentWord.answers);
   increaseSession("hints");
   increaseWordCounter(currentWord.index, "hints");
+  shakingElement("hints");
   increaseUICounter("hints");
   document.getElementById("answer-input").setAttribute("placeholder", hint);
 };
@@ -102,6 +111,7 @@ let handleNextWord = () => {
   cleanInputSuggestion();
   increaseSession("falure");
   increaseWordCounter(currentWord.index, "falure");
+  shakingElement("falure");
   increaseUICounter("falure");
   setNewWord();
 };
@@ -115,6 +125,17 @@ let increaseWordCounter = (index, counterName) => {
 let increaseUICounter = (name) => {
   let getId = idCounters[name];
   document.getElementById(getId).innerHTML = sessionStorage[name];
+};
+
+// Shaking
+
+let shakingElement = (name) => {
+  let getId = idDivCounters[name];
+  let element = document.getElementById(getId);
+  element.classList.add("shaking");
+  setTimeout(() => {
+    element.classList.remove("shaking");
+  }, 1000);
 };
 
 // Clean front-end
