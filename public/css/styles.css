@@ -1,3 +1,5 @@
+@import url("https://fonts.googleapis.com/css2?family=Potta+One&display=swap");
+
 *,
 *::after,
 *::before {
@@ -7,20 +9,34 @@
 body {
   margin: 0;
   padding: 0;
-  font-family: Georgia, "Times New Roman", Times, serif;
+  font-family: "Potta One", cursive;
+
   background: url("/img/background.jpg") no-repeat center center fixed;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
 }
 
 .error-container {
   margin-top: 80px;
 }
 
+.alert {
+  margin-top: 1rem;
+}
+
 .form-mt {
   margin-top: 10vh;
 }
 
+/* Shadow */
+.custom-box-shadow {
+  box-shadow: 0 19px 38px rgba(0, 0, 0, 0.3), 0 15px 12px rgba(0, 0, 0, 0.22);
+}
 /* Competition Cards */
 .card {
+  height: 180px;
   width: 50%;
 }
 
@@ -45,13 +61,15 @@ body {
 #counters-container {
   margin-top: 40px;
   background-color: #e9ecef;
-  font-size: 2.5rem;
+  font-size: 2rem;
   padding: 1.5rem;
+  border-radius: 0.25em;
 }
 
 #counters-container > h1 {
   text-align: center;
   text-transform: uppercase;
+  text-shadow: 0 19px 38px rgba(0, 0, 0, 0.3), 0 15px 12px rgba(0, 0, 0, 0.22);
 }
 
 #en-success-span,
@@ -61,7 +79,7 @@ body {
 }
 
 #suggestions-container {
-  margin-top: 150px;
+  margin-top: 110px;
 }
 
 /* Help - Hints container and buttons */
@@ -83,8 +101,6 @@ body {
   justify-content: center;
 }
 
-/* Adding words */
-
 /* Btn for add more answers */
 
 #add-answer {
@@ -92,11 +108,29 @@ body {
   padding: 0.4rem;
 }
 
+@media screen and (max-width: 990px) {
+  .tab-group {
+    text-align: center;
+  }
+
+  .form-mt {
+    margin-top: 12vh;
+  }
+
+  .card {
+    width: 70%;
+  }
+}
+
 @media screen and (max-width: 767px) {
   #counters-container {
     display: flex;
-    flex-direction: row-reverse;
-    font-size: 25px;
+    font-size: 1.6rem;
+    flex-direction: column;
+  }
+
+  #counters-container > h1 {
+    font-size: 1.8rem;
   }
 
   #help-buttons-container {
@@ -105,6 +139,32 @@ body {
   }
 
   .card {
-    margin-left: 25%;
+    width: -webkit-fill-available;
+  }
+}
+
+@media screen and (max-width: 540px) {
+  #counters-container {
+    font-size: 1.6rem;
+  }
+
+  #counters-container > h1 {
+    font-size: 1em;
+  }
+
+  #counters-container > div {
+    display: flex;
+    flex-direction: column;
+    align-self: center;
+  }
+  #counters-container > div > div {
+    text-align-last: justify;
+  }
+  #counters-container > div > div > span {
+    width: 10rem;
+    text-align-last: auto;
+  }
+  #suggestions-container {
+    margin-top: 40px;
   }
 }
