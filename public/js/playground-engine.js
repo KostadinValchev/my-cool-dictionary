@@ -161,15 +161,13 @@ let cleanInputSuggestion = () => {
 };
 
 const handleFinishCompetition = () => {
-  if (confirm("Are you sure you want to finish competition?")) {
-    let score = getResults();
-    postData("http://localhost:3000/words/finish-competition", {
-      score,
-      data: document.words,
-    }).then(() => {
-      window.location.replace("http://localhost:3000/");
-    });
-  }
+  let score = getResults();
+  postData("http://localhost:3000/words/finish-competition", {
+    score,
+    data: document.words,
+  }).then(() => {
+    window.location.replace("http://localhost:3000/");
+  });
 };
 
 (function () {
