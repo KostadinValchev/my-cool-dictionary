@@ -45,13 +45,17 @@ router.get("/guess-words", async (req, res) => {
 router.post("/finish-competition", async (req, res) => {
   let { score, data } = req.body;
   let userId = req.session.user.uid;
-  // TODO: Validate data from body....
-  try {
-    await setNewScoreResultFromUser(userId, score);
-    await updateWordData(userId, data);
-    res.redirect("/");
-  } catch (error) {
-    console.log("Errror", error);
+  if (!score || !data || !userId) {
+    return res.status(400).send("Invalid data");
+  } else {
+    try {
+      await setNewScoreResultFromUser(userId, score);
+      await updateWordData(userId, data);
+      res.status(200).send("Successfully");
+      res.end();
+    } catch (error) {
+      console.log("Errror", error);
+    }
   }
 });
 

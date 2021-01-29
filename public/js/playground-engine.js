@@ -165,9 +165,17 @@ const handleFinishCompetition = () => {
   postData("http://localhost:3000/words/finish-competition", {
     score,
     data: document.words,
-  }).then(() => {
-    window.location.replace("http://localhost:3000/");
-  });
+  })
+    .then((res) => {
+      showError("success", "You have successfully completed!");
+      setTimeout(() => {
+        window.location.replace("http://localhost:3000/");
+      }, 2000);
+    })
+    .catch((err) => {
+      console.log(err);
+      showError("falure", "Opps something went wrong. Invalid data!");
+    });
 };
 
 (function () {
