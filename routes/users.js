@@ -89,16 +89,9 @@ router.post("/login", redirectHome, async (req, res) => {
 router.get("/logout", redirectLogin, async (req, res) => {
   try {
     await logout();
-    req.session.destroy((err) => {
-      if (err) {
-        return res.redirect("/");
-      }
-
-      // TODO: Solve problem with flash message when user logout
-      // req.flash("success_msg", "You are logged out");
-      res.clearCookie("session-id");
-      res.redirect("/users/login");
-    });
+    delete req.session.user;
+    req.flash("success_msg", "You are logged out");
+    res.redirect("/users/login");
   } catch (error) {
     console.log(error);
   }
