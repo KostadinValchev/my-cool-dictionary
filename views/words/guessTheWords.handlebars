@@ -3,16 +3,9 @@
 <div class="container" id="counters-container">
     <h1>Current status</h1>
     <div class="row">
-        <div class="col" id="success-span-container">
-            <span class="badge badge-pill badge-success custom-box-shadow">Success</span> <span
-                id="success-span">5</span>
-        </div>
-        <div class="col" id="falure-span-container">
-            <span class="badge badge-pill badge-danger custom-box-shadow">Falure</span> <span id="falure-span">2</span>
-        </div>
-        <div class="col" id="hint-span-container">
-            <span class="badge badge-pill badge-warning custom-box-shadow">Hints</span> <span id="hints-span">1</span>
-        </div>
+        {{> counter prefix=../prefix type="badge-success" title="Success" id="success-span-container" spanId="success-span"}}
+        {{> counter prefix=../prefix type="badge-danger" title="Falure" id="falure-span-container" spanId="falure-span"}}
+        {{> counter prefix=../prefix type="badge-warning" title="Hints" id="hint-span-container" spanId="hints-span"}}
     </div>
 </div>
 
@@ -73,7 +66,8 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary" data-dismiss="modal" id="finish-button">Save changes</button>
+                <button type="button" class="btn btn-primary" data-dismiss="modal" id="finish-button">Save
+                    changes</button>
             </div>
         </div>
     </div>

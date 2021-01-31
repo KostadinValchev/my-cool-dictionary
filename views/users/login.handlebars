@@ -2,7 +2,7 @@
     <div class="col-md-4 order-md-2 mb-4 bg-white shadow-lg bg-white rounded">
         {{#if errors}}
         {{#each errors}}
-        <div class="alert alert-danger">{{msg}}</div>
+        {{> form-msg prefix=../prefix msg=msg class="alert-danger"}}
         {{/each}}
         {{/if}}
         <form method="post" action="/users/login" class="form-signin mb-4">
@@ -11,15 +11,9 @@
                 <h1 class="h3 mb-3 font-weight-normal">Login</h1>
             </div>
 
-            <div class="form-label-group mb-4">
-                <label for="inputEmail">Email</label>
-                <input type="text" name="email" class="form-control" placeholder="Email" required autofocus>
-            </div>
+            {{> input-field prefix=../prefix name="email" label="Email" type="email" placeholder="Email"}}
+            {{> input-field prefix=../prefix name="password" label="Password" type="password" placeholder="Password"}}
 
-            <div class="form-label-group mb-4">
-                <label for="inputPassword">Password</label>
-                <input type="password" name="password" class="form-control" placeholder="Password" required>
-            </div>
             <input type="hidden" name="_csrf" value="{{ csrfToken }}">
             <button class="btn btn-lg btn-primary btn-block" type="submit">Login</button>
         </form>

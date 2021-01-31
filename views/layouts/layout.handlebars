@@ -64,34 +64,16 @@
         <div class="container">
             <div class="error-container">
                 {{#if success_msg}}
-                <div class="card text-black bg-success mb-3" style="max-width: 18rem;">
-                    <div class="card-header">Successful</div>
-                    <div class="card-body">
-                        <h5 class="card-title">Well done!</h5>
-                        <p class="card-text">{{success_msg}}</p>
-                    </div>
-                </div>
+                {{> message prefix=../prefix msg=success_msg class="bg-success" header="Successful" title="Well
+                done!"}}
                 {{/if}}
                 {{#if error_msg}}
-                <div class="card text-black bg-danger mb-3" style="max-width: 18rem;">
-                    <div class="card-header">Failure</div>
-                    <div class="card-body">
-                        <h5 class="card-title">Sorry!</h5>
-                        <p class="card-text">{{error_msg}}</p>
-                    </div>
-                </div>
+                {{> message prefix=../prefix msg=error_msg class="bg-danger" header="Failure" title="Sorry!"}}
                 {{/if}}
                 {{#if error}}
-                <div class="card text-black bg-danger mb-3" style="max-width: 18rem;">
-                    <div class="card-header">Failure</div>
-                    <div class="card-body">
-                        <h5 class="card-title">Sorry!</h5>
-                        <p class="card-text">{{error}}</p>
-                    </div>
-                </div>
+                {{> message prefix=../prefix msg=error class="bg-danger" header="Failure" title="Sorry!"}}
                 {{/if}}
             </div>
-
 
             {{{body}}}
 

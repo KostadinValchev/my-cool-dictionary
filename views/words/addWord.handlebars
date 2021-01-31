@@ -2,7 +2,7 @@
     <div class="col-md-4 order-md-2 mb-4 bg-white shadow-lg bg-white rounded">
         {{#if errors}}
         {{#each errors}}
-        <div class="alert alert-danger">{{msg}}</div>
+        {{> form-msg prefix=../prefix msg=msg class="alert-danger"}}
         {{/each}}
         {{/if}}
         <form method="post" action="/words/add" class="form-signin mb-4">
