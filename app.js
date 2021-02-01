@@ -98,9 +98,14 @@ app.use((req, res, next) => {
   res.locals.user = req.session.user || null;
   next();
 });
+
 app.use("/", routes);
 app.use("/users", users);
 app.use("/words", onAuthStateChanged, words);
+app.use((req, res, next) => {
+  res.status(404);
+  res.render("404");
+});
 
 app.listen(PORT, () => {
   console.log(`Server started on port ${PORT}`);

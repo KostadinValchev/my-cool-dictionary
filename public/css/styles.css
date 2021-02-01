@@ -123,6 +123,21 @@ body {
   padding: 0.4rem;
 }
 
+/* 404 Not found page */
+.not-found-container {
+  margin: 4em;
+  text-align: center;
+}
+
+.not-found-container > h1 {
+  font-size: 9em;
+}
+
+.not-found-container > a {
+  display: inline-block;
+  text-decoration: none;
+}
+
 @media screen and (max-width: 990px) {
   .tab-group {
     text-align: center;
