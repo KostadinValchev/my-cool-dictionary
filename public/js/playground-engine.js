@@ -1,15 +1,3 @@
-let idCounters = {
-  success: "success-span",
-  falure: "falure-span",
-  hints: "hints-span",
-};
-
-let idDivCounters = {
-  success: "success-span-container",
-  falure: "falure-span-container",
-  hints: "hint-span-container",
-};
-
 // Create Session
 let createSession = (name) => {
   sessionStorage.setItem(`${name}`, "0");
@@ -28,29 +16,14 @@ let getResults = () => {
   };
 };
 
-// <----- END ----->
-
-// COUNTERS
-// Init Counters
-let initCounters = () => {
-  createSession("success");
-  createSession("falure");
-  createSession("hints");
-  document.getElementById("success-span").innerHTML = 0;
-  document.getElementById("falure-span").innerHTML = 0;
-  document.getElementById("hints-span").innerHTML = 0;
-};
-
-// <----- EVENTS  ----->
-// Attach event for Checking word suggestion
-const handleCheck = () => {
+const handleCheckWord = () => {
   const input = document.getElementById("answer-input").value.toLowerCase();
   let answers = Object.values(currentWord.answers);
   if (answers.includes(input)) {
     toggleSuccessAlert();
     increaseSession("success");
     increaseWordCounter(currentWord.index, "success");
-    shakingElement("success");
+    shakingCounter("success");
     increaseUICounter("success");
     setTimeout(() => {
       toggleSuccessAlert();
@@ -62,7 +35,7 @@ const handleCheck = () => {
     toggleFalureAlert();
     increaseSession("falure");
     increaseWordCounter(currentWord.index, "falure");
-    shakingElement("falure");
+    shakingCounter("falure");
     increaseUICounter("falure");
   }
 };
@@ -70,35 +43,10 @@ const handleCheck = () => {
 const enterCheck = (e) => {
   e.preventDefault();
   if (e.key === "Enter") {
-    handleCheck();
+    handleCheckWord();
   }
 };
 
-const makeHint = (word) => {
-  let word_answers = Object.values(word);
-  let target = word_answers[Math.floor(Math.random() * word_answers.length)];
-  let hint = "";
-  for (let i = 0; i < target.length; i++) {
-    if (i === 0) hint += target[i];
-    else if (i === target.length - 1) hint += target[target.length - 1];
-    else hint += " _ ";
-  }
-  return hint;
-};
-
-const handleHint = () => {
-  cleanInputSuggestion();
-  let hint = makeHint(currentWord.answers);
-  increaseSession("hints");
-  increaseWordCounter(currentWord.index, "hints");
-  shakingElement("hints");
-  increaseUICounter("hints");
-  document.getElementById("answer-input").setAttribute("placeholder", hint);
-};
-
-// <----- DOM  ----->
-
-// Set New Word
 let setNewWord = () => {
   let index = Math.floor(Math.random() * document.words.length);
   const randomElement = document.words[index];
@@ -111,49 +59,9 @@ let handleNextWord = () => {
   cleanInputSuggestion();
   increaseSession("falure");
   increaseWordCounter(currentWord.index, "falure");
-  shakingElement("falure");
+  shakingCounter("falure");
   increaseUICounter("falure");
   setNewWord();
-};
-
-// Increase counters
-
-let increaseWordCounter = (index, counterName) => {
-  document.words[index][counterName]++;
-};
-
-let increaseUICounter = (name) => {
-  let getId = idCounters[name];
-  document.getElementById(getId).innerHTML = sessionStorage[name];
-};
-
-// Shaking
-
-let shakingElement = (name) => {
-  let getId = idDivCounters[name];
-  let element = document.getElementById(getId);
-  element.classList.add("shaking");
-  setTimeout(() => {
-    element.classList.remove("shaking");
-  }, 1000);
-};
-
-// Clean front-end
-let toggleSuccessAlert = () => {
-  let successClasses = document.getElementById("success").classList;
-  successClasses.contains("hidden")
-    ? successClasses.remove("hidden")
-    : successClasses.add("hidden");
-};
-
-let toggleFalureAlert = () => {
-  let falureClasses = document.getElementById("failure").classList;
-  if (falureClasses.contains("hidden")) falureClasses.remove("hidden");
-  else {
-    setTimeout(() => {
-      falureClasses.add("hidden");
-    }, 1000);
-  }
 };
 
 let cleanInputSuggestion = () => {
@@ -167,25 +75,25 @@ const handleFinishCompetition = () => {
     data: document.words,
   })
     .then((res) => {
-      showError("success", "You have successfully completed!");
+      showMsg("success", "You have successfully completed!");
       setTimeout(() => {
         window.location.replace("http://localhost:3000/");
       }, 2000);
     })
     .catch((err) => {
       console.log(err);
-      showError("falure", "Opps something went wrong. Invalid data!");
+      showMsg("falure", "Opps something went wrong. Invalid data!");
     });
 };
 
-(function () {
+function initCompetition() {
   // Get random word from collection
   setNewWord();
   // Settup counters
   initCounters();
 
   // Attach Check button
-  document.getElementById("check-button").onclick = handleCheck;
+  document.getElementById("check-button").onclick = handleCheckWord;
   document.getElementById("answer-input").onkeyup = enterCheck;
   // Attach Event Hint
   document.getElementById("hint-button").onclick = handleHint;
@@ -193,4 +101,4 @@ const handleFinishCompetition = () => {
   document.getElementById("next-button").onclick = handleNextWord;
   // Attach Event for finishing current competition
   document.getElementById("finish-button").onclick = handleFinishCompetition;
-})();
+}

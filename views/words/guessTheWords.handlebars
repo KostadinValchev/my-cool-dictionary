@@ -3,8 +3,10 @@
 <div class="container" id="counters-container">
     <h1>Current status</h1>
     <div class="row">
-        {{> counter prefix=../prefix type="badge-success" title="Success" id="success-span-container" spanId="success-span"}}
-        {{> counter prefix=../prefix type="badge-danger" title="Falure" id="falure-span-container" spanId="falure-span"}}
+        {{> counter prefix=../prefix type="badge-success" title="Success" id="success-span-container"
+        spanId="success-span"}}
+        {{> counter prefix=../prefix type="badge-danger" title="Falure" id="falure-span-container"
+        spanId="falure-span"}}
         {{> counter prefix=../prefix type="badge-warning" title="Hints" id="hint-span-container" spanId="hints-span"}}
     </div>
 </div>
@@ -76,3 +78,7 @@
 <div id="words-collection" style="display: none;">{{words}}</div>
 <script src="/js/retrieve-words.js"></script>
 <script src="/js/playground-engine.js"></script>
+
+<script>
+    window.onload = initCompetition;
+</script>

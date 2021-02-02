@@ -48,7 +48,10 @@ const updateWordData = async (userId, data) => {
 
 const setNewScoreResultFromUser = async (userId, score) => {
   try {
-    await firestore.collection("scores").doc().set({ userId, score });
+    await firestore
+      .collection("scores")
+      .doc()
+      .set({ userId, score, timestamp: new Date() });
   } catch (error) {
     console.log(error);
   }
