@@ -10,12 +10,53 @@ body {
   margin: 0;
   padding: 0;
   font-family: "Potta One", cursive;
-  background: url("/img/background.jpg") no-repeat center center fixed;
+  background: url("/img/site-background.jpg") no-repeat center center fixed;
   -webkit-background-size: cover;
   -moz-background-size: cover;
   -o-background-size: cover;
   background-size: cover;
 }
+
+/* Dashboard */
+.dashboard-stats {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  word-wrap: break-word;
+  background-color: #fff;
+  background-clip: border-box;
+  border: 1px solid #e3e6f0;
+  border-radius: 0.35rem;
+}
+
+.border-left-primary {
+  border-left: 0.25rem solid #4e73df !important;
+}
+
+.border-left-success {
+  border-left: 0.25rem solid #1cc88a !important;
+}
+
+.border-left-info {
+  border-left: 0.25rem solid #36b9cc !important;
+}
+
+.border-left-warning {
+  border-left: 0.25rem solid #f6c23e !important;
+}
+
+.text-gray {
+  color: #dddfeb !important;
+}
+
+.table-header {
+  background-color: #e9ecef;
+  display: inline-block;
+  border-radius: 10%;
+}
+
+/* <--- Dashboard end --->*/
 
 .error-container {
   margin-top: 80px;

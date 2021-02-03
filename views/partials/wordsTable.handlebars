@@ -1,0 +1,15 @@
+<table class="table table-dark">
+    <thead class="thead-light">
+        {{#each teableData.titles}}
+        <th>{{this}}</th>
+        {{/each}}
+    </thead>
+    <tbody>
+        {{#each teableData.data}}
+        <tr>
+            <td>{{this.contextWord}}</td>
+            <td>{{this.answers}}</td>
+        </tr>
+        {{/each}}
+    </tbody>
+</table>
