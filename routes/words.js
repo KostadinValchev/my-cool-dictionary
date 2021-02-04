@@ -7,9 +7,9 @@ const {
   updateWordData,
   setNewScoreResultFromUser,
 } = require("../models/word");
-const { json } = require("body-parser");
+const { redirectLogin } = require("../models/user");
 
-router.get("/add", (req, res) => {
+router.get("/add", redirectLogin, (req, res) => {
   res.render("words/addWord");
 });
 
@@ -33,7 +33,7 @@ router.post("/add", async (req, res) => {
   }
 });
 
-router.get("/guess-words", async (req, res) => {
+router.get("/guess-words", redirectLogin, async (req, res) => {
   try {
     let words = await getAllWordsFromDatabase(req.session.user.uid);
     res.render("words/guessTheWords", { words });

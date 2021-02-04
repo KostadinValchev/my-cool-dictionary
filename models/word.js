@@ -20,6 +20,18 @@ const getAllWordsFromDatabase = async (userId) => {
   }
 };
 
+const getFirstTenWordsFromDatabase = async (userId) => {
+  try {
+    let wordsRef = firestore.collection(userId).limit(10);
+    let docSnapshots = await wordsRef.get();
+    let lastVisible = docSnapshots.docs[docSnapshots.docs.length - 1];
+    let words = docSnapshots.docs.map((doc) => doc.data());
+    return { words, lastVisible };
+  } catch (error) {
+    console.log(error);
+  }
+};
+
 const additionsForWordDoc = (document) => {
   document.success = 0;
   document.falure = 0;
@@ -62,4 +74,5 @@ module.exports = {
   getAllWordsFromDatabase,
   updateWordData,
   setNewScoreResultFromUser,
+  getFirstTenWordsFromDatabase,
 };
