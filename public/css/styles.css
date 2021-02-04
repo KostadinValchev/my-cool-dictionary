@@ -50,6 +50,22 @@ body {
   color: #dddfeb !important;
 }
 
+.text-primary {
+  color: #4e73df !important;
+}
+
+.text-success {
+  color: #1cc88a !important;
+}
+
+.text-info {
+  color: #36b9cc !important;
+}
+
+.text-warning {
+  color: #f6c23e !important;
+}
+
 .table-header {
   background-color: #e9ecef;
   display: inline-block;

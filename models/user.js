@@ -1,4 +1,4 @@
-const firestore = require("../firebase/firebase.utils").firestore;
+const { firestore, update } = require("../firebase/firebase.utils");
 const firebase = require("firebase");
 
 const createWithEmailAndPassword = async (email, password) => {
@@ -28,6 +28,11 @@ const createProfileDocument = async (userAuth, additionalData) => {
         displayName,
         email,
         createdAt,
+        competitions: 0,
+        falure: 0,
+        hints: 0,
+        success: 0,
+        totalWords: 0,
         ...additionalData,
       });
     } catch (error) {
@@ -58,6 +63,29 @@ const logout = async () => {
   }
 };
 
+const increaseUserTotalWordsCounter = (userId) => {
+  try {
+    let docRef = firestore.collection("users").doc(userId);
+    docRef.update({ totalWords: update.FieldValue.increment(1) });
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+const increaseUserCountersAftCompetition = (userId, score) => {
+  try {
+    let docRef = firestore.collection("users").doc(userId);
+    docRef.update({
+      competitions: update.FieldValue.increment(1),
+      success: update.FieldValue.increment(score.success),
+      falure: update.FieldValue.increment(score.falure),
+      hints: update.FieldValue.increment(score.hints),
+    });
+  } catch (error) {
+    console.log(error);
+  }
+};
+
 const onAuthStateChanged = (req, res, next) => {
   firebase.auth().onAuthStateChanged((user) => {
     if (user) next();
@@ -81,4 +109,6 @@ module.exports = {
   onAuthStateChanged,
   redirectHome,
   redirectLogin,
+  increaseUserTotalWordsCounter,
+  increaseUserCountersAftCompetition,
 };

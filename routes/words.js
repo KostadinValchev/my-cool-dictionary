@@ -7,7 +7,11 @@ const {
   updateWordData,
   setNewScoreResultFromUser,
 } = require("../models/word");
-const { redirectLogin } = require("../models/user");
+const {
+  redirectLogin,
+  increaseUserTotalWordsCounter,
+  increaseUserCountersAftCompetition,
+} = require("../models/user");
 
 router.get("/add", redirectLogin, (req, res) => {
   res.render("words/addWord");
@@ -16,15 +20,16 @@ router.get("/add", redirectLogin, (req, res) => {
 router.post("/add", async (req, res) => {
   const { contextWord, ...answers } = req.body;
   let validationErrors = validator.addWord(req);
-
+  let userId = req.session.user.uid;
   if (validationErrors) {
     res.render("words/addWord", { errors: validationErrors });
   } else {
     try {
-      await addWordDocument(req.session.user.uid, {
+      await addWordDocument(userId, {
         contextWord,
         answers,
       });
+      await increaseUserTotalWordsCounter(userId);
       req.flash("success_msg", "Successfully added word");
       res.redirect("/words/add");
     } catch (error) {
@@ -51,6 +56,7 @@ router.post("/finish-competition", async (req, res) => {
     try {
       await setNewScoreResultFromUser(userId, score);
       await updateWordData(userId, data);
+      await increaseUserCountersAftCompetition(userId, score);
       res.status(200).send("Successfully");
       res.end();
     } catch (error) {
