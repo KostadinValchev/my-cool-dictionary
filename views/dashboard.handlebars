@@ -1,9 +1,13 @@
 <div class="container">
     <div class="row">
-        {{> dashboard-stats prefix=../prefix color="primary" title="Total words" value=358 icon="calendar"}}
-        {{> dashboard-stats prefix=../prefix color="info" title="Competitions" value=1451 icon="flag-checkered"}}
-        {{> dashboard-stats prefix=../prefix color="success" title="Guessed" value=10032 icon="check-circle"}}
-        {{> dashboard-stats prefix=../prefix color="danger" title="Failures" value=1221 icon="exclamation-triangle"}}
+        {{> dashboard-stats prefix=../prefix color="primary" title="Total words" value=stats.totalWords
+        icon="calendar"}}
+        {{> dashboard-stats prefix=../prefix color="info" title="Competitions" value=stats.competitions
+        icon="flag-checkered"}}
+        {{> dashboard-stats prefix=../prefix color="success" title="Guessed" value=stats.success
+        icon="check-circle"}}
+        {{> dashboard-stats prefix=../prefix color="danger" title="Failures" value=stats.falure
+        icon="exclamation-triangle"}}
     </div>
 </div>
 <div class="row">

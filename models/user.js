@@ -63,7 +63,7 @@ const logout = async () => {
   }
 };
 
-const increaseUserTotalWordsCounter = (userId) => {
+const increaseUserTotalWordsCounter = async (userId) => {
   try {
     let docRef = firestore.collection("users").doc(userId);
     docRef.update({ totalWords: update.FieldValue.increment(1) });
@@ -72,7 +72,7 @@ const increaseUserTotalWordsCounter = (userId) => {
   }
 };
 
-const increaseUserCountersAftCompetition = (userId, score) => {
+const increaseUserCountersAftCompetition = async (userId, score) => {
   try {
     let docRef = firestore.collection("users").doc(userId);
     docRef.update({
@@ -81,6 +81,16 @@ const increaseUserCountersAftCompetition = (userId, score) => {
       falure: update.FieldValue.increment(score.falure),
       hints: update.FieldValue.increment(score.hints),
     });
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+const getUserStats = async (userId) => {
+  try {
+    let docRef = firestore.collection("users").doc(userId);
+    let doc = await docRef.get();
+    return ({ totalWords, falure, success, competitions } = doc.data());
   } catch (error) {
     console.log(error);
   }
@@ -111,4 +121,5 @@ module.exports = {
   redirectLogin,
   increaseUserTotalWordsCounter,
   increaseUserCountersAftCompetition,
+  getUserStats,
 };
