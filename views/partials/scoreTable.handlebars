@@ -1,0 +1,14 @@
+<table class="table table-dark">
+    <thead class="thead-light">
+        {{#each titles}}
+        <th>{{this}}</th>
+        {{/each}}
+    </thead>
+    <tbody>
+        {{#each data}}
+        <tr>
+            <td>{{this.contextWord}}</td>
+        </tr>
+        {{/each}}
+    </tbody>
+</table>

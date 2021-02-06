@@ -32,6 +32,20 @@ const getFirstTenWordsFromDatabase = async (userId) => {
   }
 };
 
+const getCustomDocumentsOrderAndLimitData = async (
+  collectName,
+  prop,
+  quantity
+) => {
+  try {
+    let collectionRef = firestore.collection(collectName);
+    let documents = await collectionRef.orderBy(prop).limit(quantity).get();
+    return documents.docs.map((doc) => doc.data());
+  } catch (error) {
+    console.log(error);
+  }
+};
+
 const additionsForWordDoc = (document) => {
   document.success = 0;
   document.falure = 0;
@@ -75,4 +89,5 @@ module.exports = {
   updateWordData,
   setNewScoreResultFromUser,
   getFirstTenWordsFromDatabase,
+  getCustomDocumentsOrderAndLimitData,
 };

@@ -19,11 +19,13 @@
 <div class="row">
     <div class="col">
         <h2 class="table-header custom-box-shadow">Most successes</h2>
-        {{> wordsTable}}
+        {{> scoreTable prefix=../prefix titles=limitationsData.titles data=limitationsData.topSuccessedWords
+        prop="success"}}
     </div>
     <div class="col">
         <h2 class="table-header custom-box-shadow">Most failures</h2>
-        {{> wordsTable }}
+        {{> scoreTable prefix=../prefix titles=limitationsData.titles data=limitationsData.topFailuresWords
+        prop="falure"}}
     </div>
 </div>
 </div>
