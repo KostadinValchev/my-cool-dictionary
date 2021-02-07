@@ -46,6 +46,10 @@ body {
   border-left: 0.25rem solid #f6c23e !important;
 }
 
+.border-left-danger {
+  border-left: 0.25rem solid #dc3545 !important;
+}
+
 .text-gray {
   color: #dddfeb !important;
 }
@@ -64,6 +68,10 @@ body {
 
 .text-warning {
   color: #f6c23e !important;
+}
+
+.text-danger {
+  color: #dc3545 !important;
 }
 
 .table-header {

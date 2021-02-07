@@ -39,8 +39,15 @@ const getCustomDocumentsOrderAndLimitData = async (
 ) => {
   try {
     let collectionRef = firestore.collection(collectName);
-    let documents = await collectionRef.orderBy(prop).limit(quantity).get();
-    return documents.docs.map((doc) => doc.data());
+    let documents = await collectionRef
+      .orderBy(prop, "desc")
+      .limit(quantity)
+      .get();
+    return documents.docs
+      .map((doc) => doc.data())
+      .map((el) => {
+        return { contextWord: el.contextWord, score: el[prop] };
+      });
   } catch (error) {
     console.log(error);
   }
