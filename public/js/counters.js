@@ -1,21 +1,21 @@
 let idCounters = {
   success: "success-span",
-  falure: "falure-span",
+  failure: "failure-span",
   hints: "hints-span",
 };
 
 let idDivCounters = {
   success: "success-span-container",
-  falure: "falure-span-container",
+  failure: "failure-span-container",
   hints: "hint-span-container",
 };
 
 let initCounters = () => {
   createSession("success");
-  createSession("falure");
+  createSession("failure");
   createSession("hints");
   document.getElementById("success-span").innerHTML = 0;
-  document.getElementById("falure-span").innerHTML = 0;
+  document.getElementById("failure-span").innerHTML = 0;
   document.getElementById("hints-span").innerHTML = 0;
 };
 

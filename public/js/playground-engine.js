@@ -11,7 +11,7 @@ let increaseSession = (name) => {
 let getResults = () => {
   return {
     success: Number(sessionStorage["success"]),
-    falure: Number(sessionStorage["falure"]),
+    failure: Number(sessionStorage["failure"]),
     hints: Number(sessionStorage["hints"]),
   };
 };
@@ -31,12 +31,12 @@ const handleCheckWord = () => {
       setNewWord();
     }, 1000);
   } else {
-    toggleFalureAlert();
-    toggleFalureAlert();
-    increaseSession("falure");
-    increaseWordCounter(currentWord.index, "falure");
-    shakingCounter("falure");
-    increaseUICounter("falure");
+    toggleFailureAlert();
+    toggleFailureAlert();
+    increaseSession("failure");
+    increaseWordCounter(currentWord.index, "failure");
+    shakingCounter("failure");
+    increaseUICounter("failure");
   }
 };
 
@@ -57,10 +57,10 @@ let setNewWord = () => {
 
 let handleNextWord = () => {
   cleanInputSuggestion();
-  increaseSession("falure");
-  increaseWordCounter(currentWord.index, "falure");
-  shakingCounter("falure");
-  increaseUICounter("falure");
+  increaseSession("failure");
+  increaseWordCounter(currentWord.index, "failure");
+  shakingCounter("failure");
+  increaseUICounter("failure");
   setNewWord();
 };
 
@@ -82,7 +82,7 @@ const handleFinishCompetition = () => {
     })
     .catch((err) => {
       console.log(err);
-      showMsg("falure", "Opps something went wrong. Invalid data!");
+      showMsg("failure", "Opps something went wrong. Invalid data!");
     });
 };
 

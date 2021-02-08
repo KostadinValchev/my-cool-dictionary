@@ -29,7 +29,7 @@ const createProfileDocument = async (userAuth, additionalData) => {
         email,
         createdAt,
         competitions: 0,
-        falure: 0,
+        failure: 0,
         hints: 0,
         success: 0,
         totalWords: 0,
@@ -78,7 +78,7 @@ const increaseUserCountersAftCompetition = async (userId, score) => {
     docRef.update({
       competitions: update.FieldValue.increment(1),
       success: update.FieldValue.increment(score.success),
-      falure: update.FieldValue.increment(score.falure),
+      failure: update.FieldValue.increment(score.failure),
       hints: update.FieldValue.increment(score.hints),
     });
   } catch (error) {
@@ -90,7 +90,7 @@ const getUserStats = async (userId) => {
   try {
     let docRef = firestore.collection("users").doc(userId);
     let doc = await docRef.get();
-    return ({ totalWords, falure, success, competitions } = doc.data());
+    return ({ totalWords, failure, success, competitions } = doc.data());
   } catch (error) {
     console.log(error);
   }

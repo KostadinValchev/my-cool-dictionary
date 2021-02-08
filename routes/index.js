@@ -22,7 +22,7 @@ router.get("/dashboard", redirectLogin, async (req, res) => {
   );
   let topFailuresWords = await getCustomDocumentsOrderAndLimitData(
     userId,
-    "falure",
+    "failure",
     5
   );
   res.render("dashboard", {

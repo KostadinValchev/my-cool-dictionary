@@ -1,6 +1,6 @@
 const MESSAGE_TYPE = {
   success: ["alert", "alert-success"],
-  falure: ["alert", "alert-danger"],
+  failure: ["alert", "alert-danger"],
 };
 
 const showMsg = (type, msg) => {
@@ -21,12 +21,12 @@ let toggleSuccessAlert = () => {
     : successClasses.add("hidden");
 };
 
-let toggleFalureAlert = () => {
-  let falureClasses = document.getElementById("failure").classList;
-  if (falureClasses.contains("hidden")) falureClasses.remove("hidden");
+let toggleFailureAlert = () => {
+  let failureClasses = document.getElementById("failure").classList;
+  if (failureClasses.contains("hidden")) failureClasses.remove("hidden");
   else {
     setTimeout(() => {
-      falureClasses.add("hidden");
+      failureClasses.add("hidden");
     }, 1000);
   }
 };

@@ -55,7 +55,7 @@ const getCustomDocumentsOrderAndLimitData = async (
 
 const additionsForWordDoc = (document) => {
   document.success = 0;
-  document.falure = 0;
+  document.failure = 0;
   document.hints = 0;
   document.timestamp = setCurrentDate();
   return document;
@@ -72,7 +72,7 @@ const updateWordData = async (userId, data) => {
         const thing = query.docs[0];
         thing.ref.update({
           success: word.success,
-          falure: word.falure,
+          failure: word.failure,
           hints: word.hints,
         });
       });

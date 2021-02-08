@@ -138,7 +138,7 @@ body {
 }
 
 #en-success-span,
-#en-falure-span,
+#en-failure-span,
 #en-hints-span {
   float: right;
 }
