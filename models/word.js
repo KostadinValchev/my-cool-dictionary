@@ -22,9 +22,10 @@ const getAllWordsFromDatabase = async (userId) => {
 
 const getFirstTenWordsFromDatabase = async (userId) => {
   try {
-    let wordsRef = firestore.collection(userId).limit(10);
+    let wordsRef = firestore.collection(userId).orderBy("contextWord").limit(10);
     let docSnapshots = await wordsRef.get();
-    let lastVisible = docSnapshots.docs[docSnapshots.docs.length - 1];
+    let lastVisible = docSnapshots.docs[docSnapshots.docs.length - 1].data()
+      .contextWord;
     let words = docSnapshots.docs.map((doc) => doc.data());
     return { words, lastVisible };
   } catch (error) {
@@ -48,6 +49,48 @@ const getCustomDocumentsOrderAndLimitData = async (
       .map((el) => {
         return { contextWord: el.contextWord, score: el[prop] };
       });
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+const getNextPage = async (collectName, lastVisible) => {
+  try {
+    let collectionRef = firestore.collection(collectName);
+    let docSnapshots = await collectionRef
+      .orderBy("contextWord")
+      .where("contextWord", ">", lastVisible)
+      .limit(10)
+      .get();
+    let next = docSnapshots.docs[docSnapshots.docs.length - 1].data()
+      .contextWord;
+    let words = docSnapshots.docs
+      .map((doc) => doc.data())
+      .map((el) => {
+        return { contextWord: el.contextWord, answers: el.answers };
+      });
+    return { words, next };
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+const getPrevPage = async (collectName, lastVisible) => {
+  try {
+    let collectionRef = firestore.collection(collectName);
+    let docSnapshots = await collectionRef
+      .orderBy("contextWord")
+      .where("contextWord", "<", lastVisible)
+      .limit(10)
+      .get();
+    let prev = docSnapshots.docs[docSnapshots.docs.length - 1].data()
+      .contextWord;
+    let words = docSnapshots.docs
+      .map((doc) => doc.data())
+      .map((el) => {
+        return { contextWord: el.contextWord, answers: el.answers };
+      });
+    return { words, prev };
   } catch (error) {
     console.log(error);
   }
@@ -97,4 +140,6 @@ module.exports = {
   setNewScoreResultFromUser,
   getFirstTenWordsFromDatabase,
   getCustomDocumentsOrderAndLimitData,
+  getNextPage,
+  getPrevPage,
 };

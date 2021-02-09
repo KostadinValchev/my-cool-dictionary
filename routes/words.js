@@ -6,6 +6,8 @@ const {
   getAllWordsFromDatabase,
   updateWordData,
   setNewScoreResultFromUser,
+  getNextPage,
+  getPrevPage,
 } = require("../models/word");
 const {
   redirectLogin,
@@ -63,6 +65,20 @@ router.post("/finish-competition", async (req, res) => {
       console.log("Errror", error);
     }
   }
+});
+
+router.get("/next-page", async (req, res) => {
+  let { uid, lastVisible } = req.session.user;
+  let data = await getNextPage(uid, lastVisible);
+  req.session.user.lastVisible = data.next;
+  res.json(JSON.stringify(data.words));
+});
+
+router.get("/prev-page", async (req, res) => {
+  let { uid, lastVisible } = req.session.user;
+  let data = await getPrevPage(uid, lastVisible);
+  req.session.user.lastVisible = data.prev;
+  res.json(JSON.stringify(data.words));
 });
 
 module.exports = router;

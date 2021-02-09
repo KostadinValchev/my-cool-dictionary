@@ -1,7 +1,7 @@
 <div class="container">
     <div class="row">
         {{> dashboard-stats prefix=../prefix color="primary" title="Total words" value=stats.totalWords
-        icon="calendar"}}
+        icon="calendar" id="numbers"}}
         {{> dashboard-stats prefix=../prefix color="info" title="Competitions" value=stats.competitions
         icon="flag-checkered"}}
         {{> dashboard-stats prefix=../prefix color="success" title="Guessed" value=stats.success
@@ -29,3 +29,5 @@
     </div>
 </div>
 </div>
+<div id="total-words" style="display: none;">{{stats.totalWords}}</div>
+<script src="/js/dashboard-utils.js"></script>

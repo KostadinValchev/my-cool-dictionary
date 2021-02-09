@@ -13,7 +13,7 @@ router.get("/", (req, res) => {
 
 router.get("/dashboard", redirectLogin, async (req, res) => {
   let userId = req.session.user.uid;
-  let dbRes = await getFirstTenWordsFromDatabase(userId);
+  let firstTenWords = await getFirstTenWordsFromDatabase(userId);
   let stats = await getUserStats(userId);
   let topSuccessedWords = await getCustomDocumentsOrderAndLimitData(
     userId,
@@ -25,11 +25,11 @@ router.get("/dashboard", redirectLogin, async (req, res) => {
     "failure",
     5
   );
+  req.session.user.lastVisible = firstTenWords.lastVisible;
   res.render("dashboard", {
     teableData: {
       titles: ["Context", "Answer"],
-      data: dbRes.words,
-      lastVisible: dbRes.lastVisible,
+      data: firstTenWords.words,
     },
     totalWords: 23445512,
     stats,
