@@ -18,6 +18,7 @@ body {
 }
 
 /* Dashboard */
+
 .dashboard-stats {
   position: relative;
   display: flex;
@@ -188,6 +189,20 @@ body {
   padding: 0.4rem;
 }
 
+/* Footer */
+.footer {
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  padding: 0.5rem 0;
+  color: #999;
+  text-align: center;
+  font-size: 10px;
+  background-color: #f9f9f9;
+  border-top: 0.05rem solid #e5e5e5;
+}
+
 /* 404 Not found page */
 .not-found-container {
   margin: 4em;
@@ -235,6 +250,12 @@ body {
 
   .card {
     width: -webkit-fill-available;
+  }
+
+  /* Dashboard */
+  #rankings-container {
+    display: flex;
+    flex-direction: column;
   }
 }
 
