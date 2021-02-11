@@ -1,7 +1,23 @@
-<div class="jumbotron >
-    <div class=" container">
-    <h1 class="display-3">WORD GAMES</h1>
-    <p>Flex your word muscles, and improve your language skills with a bit of fun..</p>
-    <p><a class="btn btn-primary btn-lg" href="#" role="button">Learn more »</a></p>
-</div>
-</div>
+<header class="masthead text-white text-center">
+    <div class="overlay"></div>
+    <div class="container">
+        <div class="row">
+            <div class="col-xl-9 mx-auto">
+                <h1 class="mb-5">GAME OF WORDS</h1>
+            </div>
+            <div class="col-xl-9 mx-auto">
+                <p class="mb-5">Strain your brain and improve your language skills with a little fun.</p>
+            </div>
+        </div>
+    </div>
+</header>
+
+<section class="features-icons bg-light text-center">
+    <div class="container">
+        <div class="row">
+            {{> features-icons-item prefix=../prefix title="Word Database" lead="Make your own collection of words and extend as much as you want!" icon="database"}}
+            {{> features-icons-item prefix=../prefix title="Fun part" lead="You can train by playing with the saved words!" icon="gamepad"}}
+            {{> features-icons-item prefix=../prefix title="Statistics" lead="Track your results to help you progress more easily!" icon="chart-line"}}
+        </div>
+    </div>
+</section>

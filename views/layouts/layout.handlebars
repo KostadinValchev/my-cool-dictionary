@@ -64,7 +64,7 @@
                 {{/if}}
             </div>
         </nav>
-        <div class="container">
+        <div id="main-container">
             <div class="error-container">
                 {{#if success_msg}}
                 {{> message prefix=../prefix msg=success_msg class="bg-success" header="Successful" title="Well
@@ -88,6 +88,7 @@
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js"
             integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx"
             crossorigin="anonymous"></script>
+        <script src="/js/init.js"></script>
         <script src="/js/words-creator.js"></script>
         <script src="/js/requester.js"></script>
         <script src="/js/messenger.js"></script>

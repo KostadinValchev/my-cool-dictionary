@@ -10,11 +10,77 @@ body {
   margin: 0;
   padding: 0;
   font-family: "Potta One", cursive;
-  background: url("/img/site-background.jpg") no-repeat center center fixed;
-  -webkit-background-size: cover;
-  -moz-background-size: cover;
-  -o-background-size: cover;
+}
+
+/*  Landing page */
+
+/* <--- Header  --->*/
+
+header.masthead {
+  top: 3.8rem;
+  height: 50vh;
+  position: relative;
+  background-color: #353440;
+  background: url("/img/background-img.jpg") no-repeat center center;
   background-size: cover;
+}
+
+.overlay {
+  position: absolute;
+  background-color: #212529;
+  height: 100%;
+  width: 100%;
+  top: 0;
+  left: 0;
+  opacity: 0.3;
+}
+
+#main-container > header > div.container > div {
+  padding: 5.5rem;
+  text-align: left;
+}
+
+#main-container > header > div.container > div > div:nth-child(1) > h1 {
+  font-size: 4.5rem;
+}
+
+/* <--- Features --->*/
+.features-icons {
+  padding-top: 7rem;
+  padding-bottom: 7rem;
+  display: block;
+  margin-block-start: 1em;
+  margin-block-end: 1em;
+  margin-inline-start: 0px;
+  margin-inline-end: 0px;
+  font-family: Lato, "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+
+.features-icons-item {
+  max-width: 20rem;
+  align-items: flex-end;
+}
+
+.features-icons-icon {
+  height: 7rem;
+}
+
+#main-container > section > div > div > div > div > div > i {
+  font-size: 3.5rem;
+  text-align: unset;
+  padding-left: 37.5%;
+}
+
+#main-container > section > div > div > div > div > h3 {
+  font-weight: 700;
+}
+
+.lead {
+  display: block;
+  margin-block-start: 1em;
+  margin-block-end: 1em;
+  margin-inline-start: 0px;
+  margin-inline-end: 0px;
 }
 
 /* Dashboard */
@@ -233,6 +299,11 @@ body {
 }
 
 @media screen and (max-width: 767px) {
+
+  #main-container > header > div.container > div > div:nth-child(1) > h1 {
+    font-size: 3.5rem;
+  }
+
   #counters-container {
     display: flex;
     font-size: 1.6rem;
