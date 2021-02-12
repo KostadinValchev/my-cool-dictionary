@@ -101,4 +101,7 @@ function initCompetition() {
   document.getElementById("next-button").onclick = handleNextWord;
   // Attach Event for finishing current competition
   document.getElementById("finish-button").onclick = handleFinishCompetition;
+  document.onreadystatechange = () => {
+    document.getElementById("finish-button").onclick = handleFinishCompetition;
+  };
 }

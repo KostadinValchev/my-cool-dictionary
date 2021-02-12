@@ -12,6 +12,10 @@ body {
   font-family: "Potta One", cursive;
 }
 
+.clickable {
+  cursor: pointer;
+}
+
 /*  Landing page */
 
 /* <--- Header  --->*/
@@ -50,7 +54,7 @@ header.masthead {
   padding-bottom: 7rem;
   display: block;
   margin-block-start: 1em;
-  margin-block-end: 1em;
+  /* margin-block-end: 1em; */
   margin-inline-start: 0px;
   margin-inline-end: 0px;
   font-family: Lato, "Helvetica Neue", Helvetica, Arial, sans-serif;
@@ -71,6 +75,10 @@ header.masthead {
   padding-left: 37.5%;
 }
 
+#main-container > section > div > div > div > div > div > i:hover {
+  font-size: 4rem;
+}
+
 #main-container > section > div > div > div > div > h3 {
   font-weight: 700;
 }
@@ -81,6 +89,54 @@ header.masthead {
   margin-block-end: 1em;
   margin-inline-start: 0px;
   margin-inline-end: 0px;
+}
+
+/* About */
+
+#about {
+  padding: 6rem 0;
+  background-color: #1abc9c !important;
+}
+
+.divider-custom {
+  margin: 1.25rem 0 1.5rem;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.divider-custom-line {
+  width: 100%;
+  max-width: 7rem;
+  height: 0.55rem;
+  background-color: #fff;
+  border-radius: 1rem;
+  border-color: #fff !important;
+}
+
+.divider-custom:first-child {
+  margin-right: 1rem;
+}
+.divider-custom:last-child {
+  margin-left: 1rem;
+}
+
+.divider-custom-icon {
+  color: #fff !important;
+  font-size: 2rem;
+}
+
+svg {
+  margin-right: 1rem;
+  margin-left: 1rem;
+  overflow: visible;
+  width: 1.125em;
+  display: inline-block;
+  font-size: inherit;
+  height: 1em;
+  overflow: visible;
+  vertical-align: -0.125em;
 }
 
 /* Dashboard */
@@ -145,6 +201,10 @@ header.masthead {
   background-color: #e9ecef;
   display: inline-block;
   border-radius: 10%;
+}
+
+.page-link {
+  cursor: pointer;
 }
 
 /* <--- Dashboard end --->*/
@@ -223,6 +283,7 @@ header.masthead {
 
 #suggestions-container {
   margin-top: 110px;
+  margin-bottom: 110px;
 }
 
 /* Help - Hints container and buttons */
@@ -285,6 +346,16 @@ header.masthead {
 }
 
 @media screen and (max-width: 990px) {
+  #main-container > header > div.container > div {
+    padding: 2.2rem;
+    text-align: left;
+  }
+  #main-container > header > div.container > div > div:nth-child(1) > h1 {
+    font-size: 3rem;
+  }
+  #main-container > header > div.container > div > div:nth-child(2) > p {
+    font-size: 1rem;
+  }
   .tab-group {
     text-align: center;
   }
@@ -299,11 +370,16 @@ header.masthead {
 }
 
 @media screen and (max-width: 767px) {
-
-  #main-container > header > div.container > div > div:nth-child(1) > h1 {
-    font-size: 3.5rem;
+  #main-container > header > div.container > div {
+    padding: 2rem;
+    text-align: left;
   }
-
+  #main-container > header > div.container > div > div:nth-child(1) > h1 {
+    font-size: 2.7rem;
+  }
+  #main-container > header > div.container > div > div:nth-child(2) > p {
+    font-size: 0.8rem;
+  }
   #counters-container {
     display: flex;
     font-size: 1.6rem;
@@ -331,19 +407,15 @@ header.masthead {
 }
 
 @media screen and (max-width: 540px) {
-  .jumbotron > div > h1 {
-    font-size: 2.8rem;
-    line-height: 1;
+  #main-container > header > div.container > div {
+    padding: 1.5rem;
+    text-align: left;
   }
-
-  .jumbotron > div > p {
-    font-size: 0.6rem;
+  #main-container > header > div.container > div > div:nth-child(1) > h1 {
+    font-size: 2.5rem;
   }
-  div.jumbotron > div > p:nth-child(3) > a {
+  #main-container > header > div.container > div > div:nth-child(2) > p {
     font-size: 0.8rem;
-  }
-  .jumbotron > a.btn {
-    font-size: 0.6rem;
   }
   #counters-container {
     font-size: 0.9rem;
