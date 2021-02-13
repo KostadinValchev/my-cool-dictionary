@@ -77,7 +77,7 @@ const handleFinishCompetition = () => {
     .then((res) => {
       showMsg("success", "You have successfully completed!");
       setTimeout(() => {
-        window.location.replace("http://localhost:3000/");
+        window.location.replace("http://localhost:3000/dashboard");
       }, 2000);
     })
     .catch((err) => {

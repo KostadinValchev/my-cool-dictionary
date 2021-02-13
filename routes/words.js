@@ -49,6 +49,19 @@ router.get("/guess-words", redirectLogin, async (req, res) => {
   }
 });
 
+router.get("/setup-competition", redirectLogin, async (req, res) => {
+  // TODO...
+  // Validations of which options the user can select
+  // Then send options
+  res.render("words/setup");
+});
+
+router.post("/setup-competition", async (req, res) => {
+  // TODO...
+  // Get user option, then redirect to exercise with user option data
+  console.log(req.body);
+});
+
 router.post("/finish-competition", async (req, res) => {
   let { score, data } = req.body;
   let userId = req.session.user.uid;
