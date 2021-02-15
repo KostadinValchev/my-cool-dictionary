@@ -1,3 +1,4 @@
+{{#if words}}
 <!-- Counters container -->
 
 <div class="container" id="counters-container">
@@ -82,3 +83,6 @@
 <script>
     window.onload = initCompetition;
 </script>
+{{else}}
+{{> addingWordsPatch }}
+{{/if}}

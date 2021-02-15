@@ -96,6 +96,17 @@ const getUserStats = async (userId) => {
   }
 };
 
+const setNewScoreResultFromUser = async (userId, score) => {
+  try {
+    await firestore
+      .collection("scores")
+      .doc()
+      .set({ userId, score, timestamp: new Date() });
+  } catch (error) {
+    console.log(error);
+  }
+};
+
 const onAuthStateChanged = (req, res, next) => {
   firebase.auth().onAuthStateChanged((user) => {
     if (user) next();
@@ -122,4 +133,5 @@ module.exports = {
   increaseUserTotalWordsCounter,
   increaseUserCountersAftCompetition,
   getUserStats,
+  setNewScoreResultFromUser
 };

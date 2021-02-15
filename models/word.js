@@ -1,5 +1,5 @@
 const firestore = require("../firebase/firebase.utils").firestore;
-const { setCurrentDate } = require("../utils/dateConverter");
+const { setCurrentDate, getFirstDayOfWeek } = require("../utils/dateConverter");
 
 const addWordDocument = async (userId, additionalData) => {
   let word = additionsForWordDoc(additionalData);
@@ -22,7 +22,10 @@ const getAllWordsFromDatabase = async (userId) => {
 
 const getFirstTenWordsFromDatabase = async (userId) => {
   try {
-    let wordsRef = firestore.collection(userId).orderBy("contextWord").limit(10);
+    let wordsRef = firestore
+      .collection(userId)
+      .orderBy("contextWord")
+      .limit(10);
     let docSnapshots = await wordsRef.get();
     let lastVisible = docSnapshots.docs[docSnapshots.docs.length - 1].data()
       .contextWord;
@@ -47,8 +50,40 @@ const getCustomDocumentsOrderAndLimitData = async (
     return documents.docs
       .map((doc) => doc.data())
       .map((el) => {
-        return { contextWord: el.contextWord, score: el[prop] };
+        return {
+          contextWord: el.contextWord,
+          score: el[prop],
+          answers: el.answers,
+        };
       });
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+const getDataFromToday = async (userId) => {
+  try {
+    let collectionRef = firestore.collection(userId);
+    let today = setCurrentDate();
+    let docSnapshots = await collectionRef
+      .where("timestamp", "==", today)
+      .get();
+    let words = [...docSnapshots.docs.map((doc) => doc.data())];
+    return JSON.stringify(words);
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+const getDataFromWeek = async (userId) => {
+  try {
+    let collectionRef = firestore.collection(userId);
+    let target = getFirstDayOfWeek();
+    let docSnapshots = await collectionRef
+      .where("timestamp", "<=", target)
+      .get();
+    let words = [...docSnapshots.docs.map((doc) => doc.data())];
+    return JSON.stringify(words);
   } catch (error) {
     console.log(error);
   }
@@ -105,41 +140,40 @@ const additionsForWordDoc = (document) => {
 };
 
 const updateWordData = async (userId, data) => {
-  let wordsRef = firestore.collection(userId);
-  data.map((word) => {
-    wordsRef
-      .where("contextWord", "==", word.contextWord)
-      .limit(1)
-      .get()
-      .then((query) => {
-        const thing = query.docs[0];
-        thing.ref.update({
-          success: word.success,
-          failure: word.failure,
-          hints: word.hints,
-        });
-      });
-  });
-};
-
-const setNewScoreResultFromUser = async (userId, score) => {
   try {
-    await firestore
-      .collection("scores")
-      .doc()
-      .set({ userId, score, timestamp: new Date() });
+    let wordsRef = firestore.collection(userId);
+    data.map((word) => {
+      wordsRef
+        .where("contextWord", "==", word.contextWord)
+        .limit(1)
+        .get()
+        .then((query) => {
+          const thing = query.docs[0];
+          thing.ref.update({
+            success: word.success,
+            failure: word.failure,
+            hints: word.hints,
+          });
+        });
+    });
   } catch (error) {
     console.log(error);
   }
+};
+
+const checkSetup = (req, res, next) => {
+  req.session.user.setuped ? next() : res.redirect("/words/setup-exercise");
 };
 
 module.exports = {
   addWordDocument,
   getAllWordsFromDatabase,
   updateWordData,
-  setNewScoreResultFromUser,
   getFirstTenWordsFromDatabase,
   getCustomDocumentsOrderAndLimitData,
   getNextPage,
   getPrevPage,
+  getDataFromToday,
+  getDataFromWeek,
+  checkSetup,
 };

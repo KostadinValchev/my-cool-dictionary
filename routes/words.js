@@ -5,14 +5,19 @@ const {
   addWordDocument,
   getAllWordsFromDatabase,
   updateWordData,
-  setNewScoreResultFromUser,
   getNextPage,
   getPrevPage,
+  getCustomDocumentsOrderAndLimitData,
+  getDataFromToday,
+  getDataFromWeek,
+  checkSetup,
 } = require("../models/word");
 const {
   redirectLogin,
   increaseUserTotalWordsCounter,
   increaseUserCountersAftCompetition,
+  getUserStats,
+  setNewScoreResultFromUser,
 } = require("../models/user");
 
 router.get("/add", redirectLogin, (req, res) => {
@@ -40,26 +45,60 @@ router.post("/add", async (req, res) => {
   }
 });
 
-router.get("/guess-words", redirectLogin, async (req, res) => {
-  try {
-    let words = await getAllWordsFromDatabase(req.session.user.uid);
-    res.render("words/guessTheWords", { words });
-  } catch (error) {
-    console.log(error);
+router.get("/exercise/:type?", redirectLogin, checkSetup, async (req, res) => {
+  let { type } = req.query;
+  let { uid } = req.session.user;
+  req.session.user.setuped = false;
+  if (!type) res.redirect("/words/setup-exercise");
+  switch (type) {
+    case "Practice all the words":
+      {
+        let words = await getAllWordsFromDatabase(uid);
+        res.render("words/guessTheWords", { words });
+      }
+      break;
+    case "Practice daily":
+      {
+        let words = await getDataFromToday(uid);
+        res.render("words/guessTheWords", { words });
+      }
+      break;
+    case "Practice weekly":
+      {
+        let words = await getDataFromWeek(uid);
+        res.render("words/guessTheWords", { words });
+      }
+      break;
+    case "Practice the most wrong":
+      {
+        let topFailuresWords = await getCustomDocumentsOrderAndLimitData(
+          uid,
+          "failure",
+          5
+        );
+        let words = JSON.stringify([...topFailuresWords]);
+        res.render("words/guessTheWords", { words });
+      }
+      break;
   }
 });
 
-router.get("/setup-competition", redirectLogin, async (req, res) => {
-  // TODO...
-  // Validations of which options the user can select
-  // Then send options
-  res.render("words/setup");
+router.get("/setup-exercise", redirectLogin, async (req, res) => {
+  let userStats = await getUserStats(req.session.user.uid);
+  if (userStats.totalWords != 0) {
+    let render = true;
+    req.session.user.setuped = true;
+    res.render("words/setup", { render });
+  } else {
+    res.render("words/setup");
+  }
 });
 
-router.post("/setup-competition", async (req, res) => {
-  // TODO...
-  // Get user option, then redirect to exercise with user option data
-  console.log(req.body);
+router.post("/setup-exercise", redirectLogin, (req, res) => {
+  let { type } = req.body;
+  type
+    ? res.redirect("/words/exercise/?type=" + type)
+    : res.redirect("/words/setup-exercise");
 });
 
 router.post("/finish-competition", async (req, res) => {
