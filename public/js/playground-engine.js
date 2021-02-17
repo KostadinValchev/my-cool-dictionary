@@ -70,14 +70,20 @@ let cleanInputSuggestion = () => {
 
 const handleFinishCompetition = () => {
   let score = getResults();
-  postData("http://localhost:3000/words/finish-competition", {
+  postData("http://" + window.location.host + "/words/finish-competition", {
     score,
     data: document.words,
   })
     .then((res) => {
       showMsg("success", "You have successfully completed!");
       setTimeout(() => {
-        window.location.replace("http://localhost:3000/dashboard");
+        let uagent = navigator.userAgent.toLowerCase();
+        if (/safari/.test(uagent) && !/chrome/.test(uagent)) {
+          window.location.href = window.location.host + "/dashboard";
+        }
+        window.location.replace(
+          "http://" + window.location.host + "/dashboard"
+        );
       }, 2000);
     })
     .catch((err) => {

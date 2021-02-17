@@ -2,14 +2,18 @@ let currentPage = 1;
 let totalPages = 0;
 
 const handleNextPage = async () => {
-  let words = await getJSONData("http://localhost:3000/words/next-page");
+  let words = await getJSONData(
+    "http://" + window.location.host + "/words/next-page"
+  );
   addTableRows(JSON.parse(words));
   currentPage++;
   checkBtns();
 };
 
 const handlePrevPage = async () => {
-  let words = await getJSONData("http://localhost:3000/words/prev-page");
+  let words = await getJSONData(
+    "http://" + window.location.host + "/words/prev-page"
+  );
   addTableRows(JSON.parse(words));
   currentPage--;
   checkBtns();
