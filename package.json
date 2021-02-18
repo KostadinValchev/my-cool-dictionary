@@ -4,6 +4,8 @@
   "description": "A fun application for storing new words and playing with them for more powerful memorization",
   "main": "app.js",
   "scripts": {
+    "dev": "webpack --mode development",
+    "build": "webpack",
     "test": "jest",
     "testwatch": "jest --watchAll"
   },
@@ -32,6 +34,19 @@
     "nodemon": "^2.0.6"
   },
   "devDependencies": {
-    "jest": "^26.6.3"
+    "@babel/cli": "^7.12.17",
+    "@babel/core": "^7.12.17",
+    "@babel/node": "^7.12.17",
+    "@babel/preset-env": "^7.12.17",
+    "babel-loader": "^8.2.2",
+    "babel-polyfill": "^6.26.0",
+    "babel-preset-stage-0": "^6.24.1",
+    "css-loader": "^5.0.2",
+    "handlebars-loader": "^1.7.1",
+    "jest": "^26.6.3",
+    "nodemon-webpack-plugin": "^4.4.4",
+    "webpack": "^5.22.0",
+    "webpack-cli": "^4.5.0",
+    "webpack-node-externals": "^2.5.2"
   }
 }

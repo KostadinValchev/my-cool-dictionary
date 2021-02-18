@@ -1,5 +1,5 @@
-let currentPage = 1;
-let totalPages = 0;
+var currentPage = 1;
+var totalPages = 0;
 
 const handleNextPage = async () => {
   let words = await getJSONData(
